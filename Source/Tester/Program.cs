@@ -39,9 +39,9 @@ process.OutputDataReceived += (sender, args) =>
     Console.WriteLine(args.Data);
     var data = args.Data;
 
-    if (!data.StartsWith("p"))
+    if (data == null || !data.StartsWith("p"))
     {
-        Console.WriteLine($"Malformed data received {data}");
+        //Console.WriteLine($"{data}");
         //return early
         return;
     }
@@ -73,8 +73,14 @@ process.OutputDataReceived += (sender, args) =>
             Console.WriteLine(String.Join(" ", row));
         }
         // calculate points
-        
 
+        var points = 0;
+        //var res = GetConnectedSets(state);
+
+        //for (var i = 1; i <= 6; i++)
+        //{
+        //    Console.WriteLine($"Points {GetConnectedSets(state, i)}x {i}");
+        //}
 
         //DIE!
         process.Kill();
@@ -82,10 +88,10 @@ process.OutputDataReceived += (sender, args) =>
 
     }
 
-    foreach (var row in state)
-    {
-        Console.WriteLine(String.Join(" ", row));
-    }
+    //foreach (var row in state)
+    //{
+    //    Console.WriteLine(String.Join(" ", row));
+    //}
 
     currentDice = (
         rnd.Next(1, 6),
