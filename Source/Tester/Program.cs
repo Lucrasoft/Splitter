@@ -20,6 +20,7 @@ var points = 0;
 var i = 0;
 var opts = Args.Parse(args);
 
+Logger.enabled = !opts.Silent;
 
 var watch = Stopwatch.StartNew();
 
@@ -74,7 +75,7 @@ static async Task<int> PlayAsync(int[,] grid, string command)
 
     process.OutputDataReceived += (sender, args) =>
     {
-        Console.WriteLine(args.Data);
+        Logger.Log(args.Data);
         var data = args.Data;
 
         if (data == null || !data.StartsWith("p"))
@@ -88,12 +89,12 @@ static async Task<int> PlayAsync(int[,] grid, string command)
 
         if (choice != currentDice.Item1 && choice != currentDice.Item2)
         {
-            Console.WriteLine($"{choice} was not rolled please try again!");
+            Logger.Log($"{choice} was not rolled please try again!");
             return;
         }
        
         if (grid[location[1], location[0]] == EMPTY || state[location[1], location[0]] != EMPTY) {
-            Console.WriteLine($"Cant place on invalid tile {location[0]},{location[1]}");
+            Logger.Log($"Cant place on invalid tile {location[0]},{location[1]}");
             return;
         }
 
@@ -105,7 +106,7 @@ static async Task<int> PlayAsync(int[,] grid, string command)
         if (rounds == 0)
         {
             var points = CalculatePoints(state, grid);
-            Console.WriteLine(Print2dMatrix(state));
+            Logger.Log(Print2dMatrix(state));
             try
             {
                 process.Close();
@@ -201,7 +202,7 @@ static int CalculatePoints(int[,] state, int[,] grid)
                pointPlaces.Any(p => p.Equals(c))))
             {
                 points += i;
-                Console.WriteLine("BONUS POINTS");
+                Logger.Log("BONUS POINTS");
             }
         }
 

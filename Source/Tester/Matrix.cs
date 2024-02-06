@@ -2,16 +2,14 @@
 
 public class Matrix
 {
-    // Returns number of islands in[,]a
     /// <summary>
-    /// 
+    ///  Finds every group in the state
     /// </summary>
-    /// <param name="a"></param>
-    /// <returns></returns>
-    public static Point[][] CountIslands(int[,] a)
+    /// <returns>Returns a list with sets of points of every group</returns>
+    public static Point[][] CountIslands(int[,] state)
     {
-        int n = a.GetLength(0);
-        int m = a.GetLength(1);
+        int n = state.GetLength(0);
+        int m = state.GetLength(1);
 
         DisjointUnionSets dus = new DisjointUnionSets(n * m);
 
@@ -19,19 +17,19 @@ public class Matrix
         {
             for (int k = 0; k < m; k++)
             {
-                if (a[j, k] == 0)
+                if (state[j, k] == 0)
                     continue;
 
                 // Check all 4 neighbours and do a union
                 // with neighbour's set if neighbour is 
                 // also 1
-                if (j + 1 < n && a[j + 1, k] == 1)
+                if (j + 1 < n && state[j + 1, k] == 1)
                     dus.Union(j * m + k, (j + 1) * m + k);
-                if (j - 1 >= 0 && a[j - 1, k] == 1)
+                if (j - 1 >= 0 && state[j - 1, k] == 1)
                     dus.Union(j * m + k, (j - 1) * m + k);
-                if (k + 1 < m && a[j, k + 1] == 1)
+                if (k + 1 < m && state[j, k + 1] == 1)
                     dus.Union(j * m + k, j * m + k + 1);
-                if (k - 1 >= 0 && a[j, k - 1] == 1)
+                if (k - 1 >= 0 && state[j, k - 1] == 1)
                     dus.Union(j * m + k, j * m + k - 1);
             }
         }
@@ -41,7 +39,7 @@ public class Matrix
         {
             for (int k = 0; k < m; k++)
             {
-                if (a[j, k] == 1)
+                if (state[j, k] == 1)
                 {
                     int root = dus.Find(j * m + k);
                     if (!islandSets.ContainsKey(root))
