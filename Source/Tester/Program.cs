@@ -140,8 +140,8 @@ process.OutputDataReceived += (sender, args) =>
     }
 
     currentDice = (
-        rnd.Next(1, 6),
-        rnd.Next(1, 6)
+        rnd.Next(1, 7),
+        rnd.Next(1, 7)
     );
 
     process.StandardInput.WriteLine($"d {currentDice.Item1} {currentDice.Item2}");
