@@ -2,7 +2,7 @@
   "profiles": {
     "Tester": {
       "commandName": "Project",
-      "commandLineArgs": "\"dotnet run --project Example\" 20 true\r\n"
+      "commandLineArgs": "\"dotnet run --project Example\" 20\r\n"
     }
   }
 }

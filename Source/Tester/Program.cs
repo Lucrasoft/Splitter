@@ -16,6 +16,17 @@ int[,] grid = {
     {0, 1, 1, 1, 1, 1, 1, 0},
     {0, 0, 1, 1, 1, 1, 0, 0},
 };
+
+
+int[,] grid2 =
+{
+    {1,1,1,0,0,1,3,1 },
+    {1,1,1,1,1,1,1,1 },
+    {0,3,1,0,0,1,1,0 },
+    {1,1,1,1,3,1,1,1 },
+    {1,1,1,1,1,1,1,1 },
+    {1,2,1,0,0,1,2,1 },
+};
 var points = 0;
 var i = 0;
 var opts = Args.Parse(args);
@@ -92,8 +103,9 @@ static async Task<int> PlayAsync(int[,] grid, string command)
             Logger.Log($"{choice} was not rolled please try again!");
             return;
         }
-       
-        if (grid[location[1], location[0]] == EMPTY || state[location[1], location[0]] != EMPTY) {
+
+        if (grid[location[1], location[0]] == EMPTY || state[location[1], location[0]] != EMPTY)
+        {
             Logger.Log($"Cant place on invalid tile {location[0]},{location[1]}");
             return;
         }
@@ -159,23 +171,23 @@ static int CalculatePoints(int[,] state, int[,] grid)
     var points = 0;
     for (var i = 1; i <= 6; i++)
     {
-        var newGrid = (int[,])state.Clone();
-        for (int k = 0; k < newGrid.GetLength(0); k++)
+        var stateCopy = (int[,])state.Clone();
+        for (int k = 0; k < stateCopy.GetLength(0); k++)
         {
-            for (int j = 0; j < newGrid.GetLength(1); j++)
+            for (int j = 0; j < stateCopy.GetLength(1); j++)
             {
-                if (newGrid[k, j] != i) // If the value is not i, replace it with 0
+                if (stateCopy[k, j] != i) // If the value is not i, replace it with 0
                 {
-                    newGrid[k, j] = EMPTY;
+                    stateCopy[k, j] = EMPTY;
                 }
                 else
                 {
-                    newGrid[k, j] = 1;
+                    stateCopy[k, j] = 1;
                 }
             }
         }
 
-        var res = Matrix.CountIslands(newGrid);
+        var res = Matrix.CountIslands(stateCopy);
         points += res.Where(c => c.Length == i).Count() * i;
 
         List<Point> pointPlaces = new List<Point>();
