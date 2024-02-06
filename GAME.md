@@ -5,7 +5,7 @@ In this game you must group numbers to score points -- two 2s, three 3s, and so 
 ### Extra clarification of the rules:
 
 - Each round you must place 2 numbers based on the numbers from the dice
-- If you get 4 connecting 4's you get 4 points
+- If you get 4 connecting 4's you get 4 points, 5 connecting 5's you get 5 points, and so on
 - If you get more or less than the number you will get no points
 - A bonus space is present on each half of the pattern, and a scored group that contains this starred space has its points doubled
 
