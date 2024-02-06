@@ -7,7 +7,7 @@ namespace Tester
     public class Matrix
     {
         // Returns number of islands in[,]a
-        public static int[] countIslands(int[,] a)
+        public static Tuple<int, int>[][] CountIslands(int[,] a)
         {
             int n = a.GetLength(0);
             int m = a.GetLength(1);
@@ -25,42 +25,43 @@ namespace Tester
                     // with neighbour's set if neighbour is 
                     // also 1
                     if (j + 1 < n && a[j + 1, k] == 1)
-                        dus.union(j * (m) + k, (j + 1) * (m) + k);
+                        dus.Union(j * m + k, (j + 1) * m + k);
                     if (j - 1 >= 0 && a[j - 1, k] == 1)
-                        dus.union(j * (m) + k, (j - 1) * (m) + k);
+                        dus.Union(j * m + k, (j - 1) * m + k);
                     if (k + 1 < m && a[j, k + 1] == 1)
-                        dus.union(j * (m) + k, (j) * (m) + k + 1);
+                        dus.Union(j * m + k, j * m + k + 1);
                     if (k - 1 >= 0 && a[j, k - 1] == 1)
-                        dus.union(j * (m) + k, (j) * (m) + k - 1);
+                        dus.Union(j * m + k, j * m + k - 1);
                 }
             }
 
-            Dictionary<int, int> islandSizes = new Dictionary<int, int>();
+            Dictionary<int, List<Tuple<int, int>>> islandSets = new Dictionary<int, List<Tuple<int, int>>>();
             for (int j = 0; j < n; j++)
             {
                 for (int k = 0; k < m; k++)
                 {
                     if (a[j, k] == 1)
                     {
-                        int x = dus.find(j * m + k);
-                        if (!islandSizes.ContainsKey(x))
-                            islandSizes[x] = 0;
-                        islandSizes[x]++;
+                        int root = dus.Find(j * m + k);
+                        if (!islandSets.ContainsKey(root))
+                            islandSets[root] = new List<Tuple<int, int>>();
+                        islandSets[root].Add(new Tuple<int, int>(j, k));
                     }
                 }
             }
 
-            // Convert islandSizes to an array
-            int[] sizes = new int[islandSizes.Count];
+            // Convert islandSets to a jagged array of tuples
+            Tuple<int, int>[][] islandTuples = new Tuple<int, int>[islandSets.Count][];
             int index = 0;
-            foreach (var size in islandSizes.Values)
+            foreach (var island in islandSets.Values)
             {
-                sizes[index++] = size;
+                islandTuples[index++] = island.ToArray();
             }
 
-            return sizes;
+            return islandTuples;
         }
     }
+
 
     class DisjointUnionSets
     {
@@ -72,10 +73,10 @@ namespace Tester
             rank = new int[n];
             parent = new int[n];
             this.n = n;
-            makeSet();
+            MakeSet();
         }
 
-        public void makeSet()
+        public void MakeSet()
         {
             // Initially, all elements are in their
             // own set.
@@ -85,7 +86,7 @@ namespace Tester
 
         // Finds the representative of the set that x
         // is an element of
-        public int find(int x)
+        public int Find(int x)
         {
             if (parent[x] != x)
             {
@@ -95,7 +96,7 @@ namespace Tester
                 // so we recursively call Find on its parent
                 // and move i's node directly under the
                 // representative of this set
-                parent[x] = find(parent[x]);
+                parent[x] = Find(parent[x]);
             }
 
             return parent[x];
@@ -103,12 +104,12 @@ namespace Tester
 
         // Unites the set that includes x and the set
         // that includes y
-        public void union(int x, int y)
+        public void Union(int x, int y)
         {
             // Find the representatives (or the root nodes)
             // for x an y
-            int xRoot = find(x);
-            int yRoot = find(y);
+            int xRoot = Find(x);
+            int yRoot = Find(y);
 
             // Elements are in the same set, no need
             // to unite anything.

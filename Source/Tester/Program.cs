@@ -78,20 +78,8 @@ process.OutputDataReceived += (sender, args) =>
     if (games == 0)
     {
         Console.WriteLine("Done!!!");
-        //foreach (var row in state)
-        //{
-        //    Console.WriteLine(String.Join(" ", row));
-        //}
-        // calculate points
-
         var points = 0;
-        //var res = GetConnectedSets(state);
-
-        //for (var i = 1; i <= 6; i++)
-        //{
-        //    Console.WriteLine($"Points {GetConnectedSets(state, i)}x {i}");
-        //}
-
+      
         for (var i = 1; i <= 6; i++)
         {
             int[,] newGrid = state.Clone() as int[,];
@@ -109,8 +97,8 @@ process.OutputDataReceived += (sender, args) =>
                     }
                 }
             }
-            var res = Tester.Matrix.countIslands(newGrid);
-            points += res.Where(c => c == i).Count();
+            var res = Tester.Matrix.CountIslands(newGrid);
+            points += res.Where(c => c.Length == i).Count();
         }
         Console.WriteLine($"Received points {points}");
         //DIE!
@@ -118,11 +106,6 @@ process.OutputDataReceived += (sender, args) =>
         Environment.Exit(1);
 
     }
-
-    //foreach (var row in state)
-    //{
-    //    Console.WriteLine(String.Join(" ", row));
-    //}
 
     currentDice = (
         rnd.Next(1, 6),
@@ -142,7 +125,6 @@ for (int i = 0; i < grid.GetLength(0); i++)
 }
 
 process.StandardInput.WriteLine($"d {currentDice.Item1} {currentDice.Item2}");
-
 
 // This places 2 on 2,2 and also makes it so 4 is placed on 7,2
 // input message example p 2 2,2

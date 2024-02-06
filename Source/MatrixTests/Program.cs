@@ -24,7 +24,7 @@ for (var i = 1; i <= 6; i++ )
             }
         }
     }
-    var res = Tester.Matrix.countIslands(newGrid);
-    Console.WriteLine($"{i} island count {res.Length} points {res.Where(c=>c == i).Count()}");
+    var res = Tester.Matrix.CountIslands(newGrid);
+    Console.WriteLine($"{i} island count {res.Length} points {res.Where(c=>c.Length == i).Count()}");
 }
 
