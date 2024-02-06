@@ -3,7 +3,12 @@
 public class Matrix
 {
     // Returns number of islands in[,]a
-    public static Tuple<int, int>[][] CountIslands(int[,] a)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="a"></param>
+    /// <returns></returns>
+    public static Point[][] CountIslands(int[,] a)
     {
         int n = a.GetLength(0);
         int m = a.GetLength(1);
@@ -31,7 +36,7 @@ public class Matrix
             }
         }
 
-        Dictionary<int, List<Tuple<int, int>>> islandSets = new Dictionary<int, List<Tuple<int, int>>>();
+        Dictionary<int, List<Point>> islandSets = new Dictionary<int, List<Point>>();
         for (int j = 0; j < n; j++)
         {
             for (int k = 0; k < m; k++)
@@ -40,14 +45,14 @@ public class Matrix
                 {
                     int root = dus.Find(j * m + k);
                     if (!islandSets.ContainsKey(root))
-                        islandSets[root] = new List<Tuple<int, int>>();
-                    islandSets[root].Add(new Tuple<int, int>(j, k));
+                        islandSets[root] = new List<Point>();
+                    islandSets[root].Add(new Point(j, k));
                 }
             }
         }
 
         // Convert islandSets to a jagged array of tuples
-        Tuple<int, int>[][] islandTuples = new Tuple<int, int>[islandSets.Count][];
+        Point[][] islandTuples = new Point[islandSets.Count][];
         int index = 0;
         foreach (var island in islandSets.Values)
         {

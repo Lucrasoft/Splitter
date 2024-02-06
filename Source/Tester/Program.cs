@@ -1,5 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Text;
+using Tester;
+
+const int EMPTY = 0;
+const int FIELD = 1;
+const int STAR = 2;
+const int HEART = 3;
 
 int[,] grid = {
     {0, 0, 1, 1, 1, 1, 0, 0},
@@ -85,6 +91,11 @@ static async Task<int> PlayAsync(int[,] grid, string command)
             Console.WriteLine($"{choice} was not rolled please try again!");
             return;
         }
+       
+        if (grid[location[1], location[0]] == EMPTY || state[location[1], location[0]] != EMPTY) {
+            Console.WriteLine($"Cant place on invalid tile {location[0]},{location[1]}");
+            return;
+        }
 
         rounds -= 1;
 
@@ -110,7 +121,7 @@ static async Task<int> PlayAsync(int[,] grid, string command)
             }
             catch (Exception e)
             {
-
+                //pass
             }
 
 
@@ -124,7 +135,6 @@ static async Task<int> PlayAsync(int[,] grid, string command)
     };
 
     process.Start();
-    //await process.StandardOutput.ReadToEndAsync();
 
     process.BeginOutputReadLine();
 
@@ -140,8 +150,11 @@ static async Task<int> PlayAsync(int[,] grid, string command)
     return await tcs.Task;
 }
 
+
+
 static int CalculatePoints(int[,] state, int[,] grid)
 {
+    //
     var points = 0;
     for (var i = 1; i <= 6; i++)
     {
@@ -152,7 +165,7 @@ static int CalculatePoints(int[,] state, int[,] grid)
             {
                 if (newGrid[k, j] != i) // If the value is not i, replace it with 0
                 {
-                    newGrid[k, j] = 0;
+                    newGrid[k, j] = EMPTY;
                 }
                 else
                 {
@@ -161,18 +174,18 @@ static int CalculatePoints(int[,] state, int[,] grid)
             }
         }
 
-        var res = Tester.Matrix.CountIslands(newGrid);
+        var res = Matrix.CountIslands(newGrid);
         points += res.Where(c => c.Length == i).Count() * i;
 
-        List<Tuple<int, int>> pointPlaces = new List<Tuple<int, int>>();
+        List<Point> pointPlaces = new List<Point>();
 
         for (int x = 0; x < grid.GetLength(0); x += 1)
         {
             for (int y = 0; y < grid.GetLength(1); y += 1)
             {
-                if (grid[x, y] == 2)
+                if (grid[x, y] == STAR)
                 {
-                    pointPlaces.Add(new Tuple<int, int>(
+                    pointPlaces.Add(new Point(
                         x, y
                         ));
                 }
@@ -214,7 +227,7 @@ static int CalculateRounds(int[,] grid)
     {
         for (int j = 0; j < grid.GetLength(1); j++)
         {
-            if (grid[i, j] != 0)
+            if (grid[i, j] != EMPTY)
                 rounds++;
         }
     }
@@ -235,27 +248,3 @@ static string Print2dMatrix(int[,] m)
     return res.ToString();
 }
 
-struct Args
-{
-    public string Command { get; set; }
-    public int Games { get; set; }
-
-    public static Args Parse(string[] args)
-    {
-        if (args.Length == 0)
-        {
-            Console.WriteLine("No program provided to run");
-            Environment.Exit(1);
-        }
-
-        var games = Int32.Parse((args.Length >= 2 ? args[1] : "200"));
-        var command = args[0];
-        return new Args(command, games);
-    }
-
-    private Args(string command, int games)
-    {
-        this.Command = command;
-        this.Games = games;
-    }
-}
