@@ -35,10 +35,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           tag_name: nightly
-          name: 'Desktop App Nightly Release $$'
+          name: 'Splitter Teser $$'
           prerelease: true
-          body: 'TODO: Add nightly release notes'
+          body: 'Download the exe down below'
           files: |
             .\Tester\bin\Any CPU\Release\net8.0\win-x64\publish\Tester.exe
             ./Tester/bin/Any CPU/Release/net8.0/win-x64/publish/Tester.exe
+            .\Source\Tester\bin\Any CPU\Release\net8.0\win-x64\publish\Tester.exe
+            ./Source/Tester/bin/Any CPU/Release/net8.0/win-x64/publish/Tester.exe
+            D:\a\Splitter\Splitter\Source\Tester\bin\Any CPU\Release\net8.0\win-x64\publish\Tester.exe
+            D:/a/Splitter/Splitter/Source/Tester/bin/Any CPU/Release/net8.0/win-x64/publish/Tester.exe
+
     
