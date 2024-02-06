@@ -1,66 +1,145 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using AForge.Imaging.Filters;
+using AForge.Imaging;
+using System.Drawing;
 
 namespace Tester
 {
     public class Matrix
     {
-        public static List<Tuple<int, int>> GetConnectedSets(int[][] grid)
+        // Returns number of islands in[,]a
+        public static int[] countIslands(int[,] a)
         {
-            List<Tuple<int, int>> connectedSets = new List<Tuple<int, int>>();
-            int rows = grid.Length;
-            int cols = grid[0].Length;
-            bool[,] visited = new bool[rows, cols];
+            int n = a.GetLength(0);
+            int m = a.GetLength(1);
 
-            // Define the directions (left, right, up, down)
-            int[] dx = { 0, 0, -1, 1 };
-            int[] dy = { -1, 1, 0, 0 };
+            DisjointUnionSets dus = new DisjointUnionSets(n * m);
 
-            for (int i = 0; i < rows; i++)
+            for (int j = 0; j < n; j++)
             {
-                for (int j = 0; j < cols; j++)
+                for (int k = 0; k < m; k++)
                 {
-                    if (!visited[i, j] && grid[i][j] != 0)
+                    if (a[j, k] == 0)
+                        continue;
+
+                    // Check all 4 neighbours and do a union
+                    // with neighbour's set if neighbour is 
+                    // also 1
+                    if (j + 1 < n && a[j + 1, k] == 1)
+                        dus.union(j * (m) + k, (j + 1) * (m) + k);
+                    if (j - 1 >= 0 && a[j - 1, k] == 1)
+                        dus.union(j * (m) + k, (j - 1) * (m) + k);
+                    if (k + 1 < m && a[j, k + 1] == 1)
+                        dus.union(j * (m) + k, (j) * (m) + k + 1);
+                    if (k - 1 >= 0 && a[j, k - 1] == 1)
+                        dus.union(j * (m) + k, (j) * (m) + k - 1);
+                }
+            }
+
+            Dictionary<int, int> islandSizes = new Dictionary<int, int>();
+            for (int j = 0; j < n; j++)
+            {
+                for (int k = 0; k < m; k++)
+                {
+                    if (a[j, k] == 1)
                     {
-                        int count = 0;
-                        int value = grid[i][j];
-
-                        Queue<Tuple<int, int>> queue = new Queue<Tuple<int, int>>();
-                        queue.Enqueue(new Tuple<int, int>(i, j));
-                        visited[i, j] = true;
-
-                        while (queue.Count > 0)
-                        {
-                            Tuple<int, int> current = queue.Dequeue();
-                            count++;
-
-                            for (int k = 0; k < 4; k++)
-                            {
-                                int ni = current.Item1 + dx[k];
-                                int nj = current.Item2 + dy[k];
-
-                                if (ni >= 0 && ni < rows && nj >= 0 && nj < cols &&
-                                    !visited[ni, nj] && grid[ni][nj] == value)
-                                {
-                                    queue.Enqueue(new Tuple<int, int>(ni, nj));
-                                    visited[ni, nj] = true;
-                                }
-                            }
-                        }
-
-                        // Add the connected set to the result if it's less than or equal to the count
-                        connectedSets.Add(new Tuple<int, int>(Math.Min(value, count), count));
+                        int x = dus.find(j * m + k);
+                        if (!islandSizes.ContainsKey(x))
+                            islandSizes[x] = 0;
+                        islandSizes[x]++;
                     }
                 }
             }
 
-            return connectedSets;
+            // Convert islandSizes to an array
+            int[] sizes = new int[islandSizes.Count];
+            int index = 0;
+            foreach (var size in islandSizes.Values)
+            {
+                sizes[index++] = size;
+            }
+
+            return sizes;
         }
     }
 
-    
+    class DisjointUnionSets
+    {
+        int[] rank, parent;
+        int n;
+
+        public DisjointUnionSets(int n)
+        {
+            rank = new int[n];
+            parent = new int[n];
+            this.n = n;
+            makeSet();
+        }
+
+        public void makeSet()
+        {
+            // Initially, all elements are in their
+            // own set.
+            for (int i = 0; i < n; i++)
+                parent[i] = i;
+        }
+
+        // Finds the representative of the set that x
+        // is an element of
+        public int find(int x)
+        {
+            if (parent[x] != x)
+            {
+                // if x is not the parent of itself,
+                // then x is not the representative of
+                // its set.
+                // so we recursively call Find on its parent
+                // and move i's node directly under the
+                // representative of this set
+                parent[x] = find(parent[x]);
+            }
+
+            return parent[x];
+        }
+
+        // Unites the set that includes x and the set
+        // that includes y
+        public void union(int x, int y)
+        {
+            // Find the representatives (or the root nodes)
+            // for x an y
+            int xRoot = find(x);
+            int yRoot = find(y);
+
+            // Elements are in the same set, no need
+            // to unite anything.
+            if (xRoot == yRoot)
+                return;
+
+            // If x's rank is less than y's rank
+            // Then move x under y so that depth of tree
+            // remains less
+            if (rank[xRoot] < rank[yRoot])
+                parent[xRoot] = yRoot;
+
+            // Else if y's rank is less than x's rank
+            // Then move y under x so that depth of tree
+            // remains less
+            else if (rank[yRoot] < rank[xRoot])
+                parent[yRoot] = xRoot;
+
+            else // Else if their ranks are the same
+            {
+                // Then move y under x (doesn't matter
+                // which one goes where)
+                parent[yRoot] = xRoot;
+
+                // And increment the result tree's
+                // rank by 1
+                rank[xRoot] = rank[xRoot] + 1;
+            }
+        }
+    }
+
+
+
 }
