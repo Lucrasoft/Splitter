@@ -3,6 +3,10 @@
     "Tester": {
       "commandName": "Project",
       "commandLineArgs": "\"dotnet run --project Example\" 20\r\n"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
     }
   }
 }

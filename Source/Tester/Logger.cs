@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Tester;
 
-namespace Tester
+public class Logger
 {
-    public class Logger
+    public static bool enabled = false;
+    public static void Log(string? message)
     {
-        public static bool enabled = false;
-        public static void Log(string? message) {
-            if (!enabled) return;
-            Console.WriteLine(message);
-        }
+        if (!enabled) return;
+        Console.WriteLine(message);
     }
-
 }
