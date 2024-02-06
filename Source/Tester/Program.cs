@@ -7,26 +7,6 @@ const int FIELD = 1;
 const int STAR = 2;
 const int HEART = 3;
 
-int[,] grid = {
-    {0, 0, 1, 1, 1, 1, 0, 0},
-    {0, 1, 1, 1, 1, 1, 1, 0},
-    {1, 1, 1, 1, 1, 1, 1, 1},
-    {2, 1, 1, 1, 1, 1, 1, 2},
-    {1, 1, 1, 1, 1, 1, 1, 1},
-    {0, 1, 1, 1, 1, 1, 1, 0},
-    {0, 0, 1, 1, 1, 1, 0, 0},
-};
-
-
-int[,] grid2 =
-{
-    {1,1,1,0,0,1,3,1 },
-    {1,1,1,1,1,1,1,1 },
-    {0,3,1,0,0,1,1,0 },
-    {1,1,1,1,3,1,1,1 },
-    {1,1,1,1,1,1,1,1 },
-    {1,2,1,0,0,1,2,1 },
-};
 var points = 0;
 var i = 0;
 var opts = Args.Parse(args);
@@ -52,7 +32,7 @@ Console.CancelKeyPress += (sender, eventArgs) =>
 
 for (; i < opts.Games; i++)
 {
-    points += await PlayAsync(grid, opts.Command);
+    points += await PlayAsync(Grids.GridB, opts.Command);
 }
 
 printEnding();
