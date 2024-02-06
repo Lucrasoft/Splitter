@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
 
 int[,] grid = {
@@ -15,155 +13,154 @@ int[,] grid = {
 
 var opts = Args.Parse(args);
 
-int[,] state = new int[grid.GetLength(0), grid.GetLength(1)];
-
-for (int i = 0; i < grid.GetLength(0); i++)
+for(var i = 0; i < opts.Games; i++)
 {
-    for (int j = 0; j < grid.GetLength(1); j++)
-    {
-        state[i, j] = 0;
-    }
+  await PlayAsync(grid, opts.Command);
 }
 
-var rounds = CalculateRounds(grid);
-
-Console.WriteLine($"Playing {rounds} Rounds");
-
-Console.WriteLine(Environment.CurrentDirectory);
-var currentDirectory = Environment.CurrentDirectory.Replace("\\Tester\\bin\\Debug\\net8.0", "");
-var currentDice = RollDice();
-
-var process = new Process();
-var startInfo = new ProcessStartInfo
+static async Task<int> PlayAsync(int[,] grid, string command)
 {
-    WindowStyle = ProcessWindowStyle.Hidden,
-    WorkingDirectory = currentDirectory,
-    FileName = "cmd.exe",
-    Arguments = $"/C {opts.Command}",
-    UseShellExecute = false,
-    RedirectStandardOutput = true,
-    RedirectStandardInput = true
-};
-
-process.StartInfo = startInfo;
-
-process.OutputDataReceived += (sender, args) =>
-{
-    Console.WriteLine(args.Data);
-    var data = args.Data;
-
-    if (data == null || !data.StartsWith("p"))
+    int[,] state = new int[grid.GetLength(0), grid.GetLength(1)];
+    for (int i = 0; i < grid.GetLength(0); i++)
     {
-        return;
-    }
-
-
-    var items = data.Split(" ");
-    var choice = Int32.Parse(items[1]);
-    var location = items[2].Split(",").Select(c => Int32.Parse(c)).ToArray();
-
-    if (choice != currentDice.Item1 && choice != currentDice.Item2)
-    {
-        Console.WriteLine($"{choice} was not rolled please try again!");
-        return;
-    }
-
-    rounds -= 1;
-
-    state[location[1], location[0]] = choice;
-    state[location[1], grid.GetLength(1) - location[0] - 1] = choice == currentDice.Item1 ? currentDice.Item2 : currentDice.Item1;
-
-
-    if (rounds == 0)
-    {
-        Console.WriteLine("Done!!!");
-        var points = 0;
-
-        for (var i = 1; i <= 6; i++)
+        for (int j = 0; j < grid.GetLength(1); j++)
         {
-            var newGrid = (int[,])state.Clone();
-            for (int k = 0; k < newGrid.GetLength(0); k++)
-            {
-                for (int j = 0; j < newGrid.GetLength(1); j++)
-                {
-                    if (newGrid[k, j] != i) // If the value is not i, replace it with 0
-                    {
-                        newGrid[k, j] = 0;
-                    }
-                    else
-                    {
-                        newGrid[k, j] = 1;
-                    }
-                }
-            }
-            var res = Tester.Matrix.CountIslands(newGrid);
-            points += res.Where(c => c.Length == i).Count();
-
-            List<Tuple<int, int>> pointPlaces = new List<Tuple<int, int>>();
-
-            for (int x = 0; x < grid.GetLength(0); x += 1)
-            {
-                for (int y = 0; y < grid.GetLength(1); y += 1)
-                {
-                    if (grid[x, y] == 2)
-                    {
-                        pointPlaces.Add(new Tuple<int, int>(
-                            x, y
-                            ));
-                    }
-
-
-
-                }
-            }
-
-            foreach (var arr in res.Where(c => c.Length == i))
-            {
-                if (arr.Any(c =>
-                   pointPlaces.Any(p => p.Equals(c))))
-                {
-                    points += 1;
-                    Console.WriteLine("BONUS POINTS");
-                }
-            }
-
+            state[i, j] = 0;
         }
-       
-        Console.WriteLine(Print2dMatrix(state));
-        Console.WriteLine($"Received points {points}");
-        //DIE!
-        process.Kill();
-        Environment.Exit(1);
-
     }
 
-    currentDice = RollDice();
+    var rounds = CalculateRounds(grid);
+    Console.WriteLine($"Playing {rounds} Rounds");
+
+    var currentDice = RollDice();
+
+    var currentDirectory = Environment.CurrentDirectory.Replace("\\Tester\\bin\\Debug\\net8.0", "");
+
+    var process = new Process();
+    var startInfo = new ProcessStartInfo
+    {
+        WindowStyle = ProcessWindowStyle.Hidden,
+        FileName = "cmd.exe",
+        Arguments = $"/C {command}",
+        UseShellExecute = false,
+        WorkingDirectory = currentDirectory,
+        RedirectStandardOutput = true,
+        RedirectStandardInput = true
+    };
+
+    process.StartInfo = startInfo;
+
+    var tcs = new TaskCompletionSource<int>();
+
+    process.OutputDataReceived += (sender, args) =>
+    {
+        Console.WriteLine(args.Data);
+        var data = args.Data;
+
+        if (data == null || !data.StartsWith("p"))
+        {
+            return;
+        }
+
+        var items = data.Split(" ");
+        var choice = Int32.Parse(items[1]);
+        var location = items[2].Split(",").Select(c => Int32.Parse(c)).ToArray();
+
+        if (choice != currentDice.Item1 && choice != currentDice.Item2)
+        {
+            Console.WriteLine($"{choice} was not rolled please try again!");
+            return;
+        }
+
+        rounds -= 1;
+
+        state[location[1], location[0]] = choice;
+        state[location[1], grid.GetLength(1) - location[0] - 1] = choice == currentDice.Item1 ? currentDice.Item2 : currentDice.Item1;
+
+        if (rounds == 0)
+        {
+            Console.WriteLine("Done!!!");
+            var points = CalculatePoints(state, grid);
+            Console.WriteLine(Print2dMatrix(state));
+            Console.WriteLine($"Received points {points}");
+            tcs.SetResult(points);
+            process.Kill();
+        }
+
+        currentDice = RollDice();
+
+        process.StandardInput.WriteLine($"d {currentDice.Item1} {currentDice.Item2}");
+    };
+
+    process.Start();
+    process.BeginOutputReadLine();
+
+    process.StandardInput.WriteLine($"{grid.GetLength(0)} {grid.GetLength(1)}");
+
+    foreach (var line in Print2dMatrix(grid).TrimEnd().Split("\n"))
+    {
+        process.StandardInput.WriteLine(line);
+    }
 
     process.StandardInput.WriteLine($"d {currentDice.Item1} {currentDice.Item2}");
-};
-process.Start();
-process.BeginOutputReadLine();
 
-process.StandardInput.WriteLine($"{grid.GetLength(0)} {grid.GetLength(1)}");
-
-foreach (var line in Print2dMatrix(grid).TrimEnd().Split("\n"))
-{
-    process.StandardInput.WriteLine(line);
+    return await tcs.Task;
 }
- 
-process.StandardInput.WriteLine($"d {currentDice.Item1} {currentDice.Item2}");
 
-// This places 2 on 2,2 and also makes it so 4 is placed on 7,2
-// input message example p 2 2,2
+static int CalculatePoints(int[,] state, int[,] grid)
+{
+    var points = 0;
+    for (var i = 1; i <= 6; i++)
+    {
+        var newGrid = (int[,])state.Clone();
+        for (int k = 0; k < newGrid.GetLength(0); k++)
+        {
+            for (int j = 0; j < newGrid.GetLength(1); j++)
+            {
+                if (newGrid[k, j] != i) // If the value is not i, replace it with 0
+                {
+                    newGrid[k, j] = 0;
+                }
+                else
+                {
+                    newGrid[k, j] = 1;
+                }
+            }
+        }
+        var res = Tester.Matrix.CountIslands(newGrid);
+        points += res.Where(c => c.Length == i).Count();
 
-await process.WaitForExitAsync();
+        List<Tuple<int, int>> pointPlaces = new List<Tuple<int, int>>();
 
-//static int PlayGame(
-//    int[,] grid,
-//    string exe
-//    ) { 
+        for (int x = 0; x < grid.GetLength(0); x += 1)
+        {
+            for (int y = 0; y < grid.GetLength(1); y += 1)
+            {
+                if (grid[x, y] == 2)
+                {
+                    pointPlaces.Add(new Tuple<int, int>(
+                        x, y
+                        ));
+                }
 
-//}
+
+
+            }
+        }
+
+        foreach (var arr in res.Where(c => c.Length == i))
+        {
+            if (arr.Any(c =>
+               pointPlaces.Any(p => p.Equals(c))))
+            {
+                points += 1;
+                Console.WriteLine("BONUS POINTS");
+            }
+        }
+
+    }
+    return points;
+}
 
 static (int, int) RollDice()
 {
