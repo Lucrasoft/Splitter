@@ -83,7 +83,7 @@ process.OutputDataReceived += (sender, args) =>
     {
         Console.WriteLine("Done!!!");
         var points = 0;
-      
+
         for (var i = 1; i <= 6; i++)
         {
             int[,] newGrid = state.Clone() as int[,];
@@ -104,28 +104,29 @@ process.OutputDataReceived += (sender, args) =>
             var res = Tester.Matrix.CountIslands(newGrid);
             points += res.Where(c => c.Length == i).Count();
 
-            List<Tuple<int,int>> pointPlaces = new List<Tuple<int, int>>();
+            List<Tuple<int, int>> pointPlaces = new List<Tuple<int, int>>();
 
             for (int x = 0; x < grid.GetLength(0); x += 1)
             {
                 for (int y = 0; y < grid.GetLength(1); y += 1)
                 {
-                    if (grid[x,y] == 2)
+                    if (grid[x, y] == 2)
                     {
-                        pointPlaces.Add(new Tuple<int,int>(
-                            x,y
+                        pointPlaces.Add(new Tuple<int, int>(
+                            x, y
                             ));
                     }
 
 
-                  
+
                 }
             }
 
-            foreach(var arr in res.Where(c => c.Length == i))
+            foreach (var arr in res.Where(c => c.Length == i))
             {
-                if(arr.Any(c=>
-                   pointPlaces.Any(p=>p.Equals(c)))) {
+                if (arr.Any(c =>
+                   pointPlaces.Any(p => p.Equals(c))))
+                {
                     points += 1;
                     Console.WriteLine("BONUS POINTS");
                 }

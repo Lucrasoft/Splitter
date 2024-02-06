@@ -9,21 +9,21 @@ var arr = new List<int[]>();
 
 for (int i = 0; i < height; i++)
 {
-   var line = Console.ReadLine();
-   Console.WriteLine(line);
-   var data = line!.Split(" ").Select(c=> Int32.Parse(c)).Select(c => c != 0 ? 0 : -1).ToArray();
-   arr.Add(data);
+    var line = Console.ReadLine();
+    Console.WriteLine(line);
+    var data = line!.Split(" ").Select(c => Int32.Parse(c)).Select(c => c != 0 ? 0 : -1).ToArray();
+    arr.Add(data);
 }
 
 var rnd = new Random();
-while(true)
+while (true)
 {
 
     Thread.Sleep(10);
     var roll = Console.ReadLine();
     if (roll == null) continue;
     Console.WriteLine(roll);
-    
+
     var nums = roll.Split(" ");
     var first = Int32.Parse(nums[1]);
     var second = Int32.Parse(nums[2]);
@@ -35,7 +35,7 @@ while(true)
         x = rnd.Next(0, width / 2);
         y = rnd.Next(0, height);
     }
-    
+
     arr[y][x] = first;
     Console.WriteLine($"p {first} {x},{y}");
 }

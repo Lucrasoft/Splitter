@@ -8,7 +8,7 @@
     {0, 0, 5, 3, 5, 1, 0, 0}
 };
 
-for (var i = 1; i <= 6; i++ )
+for (var i = 1; i <= 6; i++)
 {
     int[,] newGrid = grid.Clone() as int[,];
     for (int k = 0; k < newGrid.GetLength(0); k++)
@@ -18,13 +18,14 @@ for (var i = 1; i <= 6; i++ )
             if (newGrid[k, j] != i) // If the value is not i, replace it with 0
             {
                 newGrid[k, j] = 0;
-            } else
+            }
+            else
             {
                 newGrid[k, j] = 1;
             }
         }
     }
     var res = Tester.Matrix.CountIslands(newGrid);
-    Console.WriteLine($"{i} island count {res.Length} points {res.Where(c=>c.Length == i).Count()}");
+    Console.WriteLine($"{i} island count {res.Length} points {res.Where(c => c.Length == i).Count()}");
 }
 
