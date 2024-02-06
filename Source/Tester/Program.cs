@@ -1,20 +1,31 @@
 ﻿// See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
 
-int[][] grid = [
-    [0, 0, 1, 1, 1, 1, 0, 0],
-    [0, 1, 1, 1, 1, 1, 1, 0],
-    [1, 1, 1, 1, 1, 1, 1, 1],
-    [2, 1, 1, 1, 1, 1, 1, 2],
-    [1, 1, 1, 1, 1, 1, 1, 1],
-    [0, 1, 1, 1, 1, 1, 1, 0],
-    [0, 0, 1, 1, 1, 1, 0, 0],
-];
+int[,] grid = {
+    {0, 0, 1, 1, 1, 1, 0, 0},
+    {0, 1, 1, 1, 1, 1, 1, 0},
+    {1, 1, 1, 1, 1, 1, 1, 1},
+    {2, 1, 1, 1, 1, 1, 1, 2},
+    {1, 1, 1, 1, 1, 1, 1, 1},
+    {0, 1, 1, 1, 1, 1, 1, 0},
+    {0, 0, 1, 1, 1, 1, 0, 0},
+};
 
 
-// im sure theres a simpler way
-int[][] state = grid.Select((r) => r.Select(f => 0).ToArray()).ToArray();
-int games = grid.Select(f => f.Count(c => c != 0)).Sum() / 2;
+int[,] state = new int[grid.GetLength(0), grid.GetLength(1)];
+int games = 0;
+
+for (int i = 0; i < grid.GetLength(0); i++)
+{
+    for (int j = 0; j < grid.GetLength(1); j++)
+    {
+        state[i, j] = 0;
+        if (grid[i, j] != 0)
+            games++;
+    }
+}
+
+games /= 2;
 
 Console.WriteLine($"Playing {games} Games");
 
@@ -60,18 +71,17 @@ process.OutputDataReceived += (sender, args) =>
     games -= 1;
 
 
-    state[location[1]][location[0]] = choice;
-    state[location[1]][grid[0].Length - location[0] - 1] = choice == currentDice.Item1 ? currentDice.Item2 : currentDice.Item1;
+    state[location[1], location[0]] = choice;
+    state[location[1], grid.GetLength(1) - location[0] - 1] = choice == currentDice.Item1 ? currentDice.Item2 : currentDice.Item1;
 
-    var done = !state.Select(f => f.FirstOrDefault(f => f == 0, -1)).Contains(0);
-    
+
     if (games == 0)
     {
         Console.WriteLine("Done!!!");
-        foreach (var row in state)
-        {
-            Console.WriteLine(String.Join(" ", row));
-        }
+        //foreach (var row in state)
+        //{
+        //    Console.WriteLine(String.Join(" ", row));
+        //}
         // calculate points
 
         var points = 0;
@@ -82,6 +92,27 @@ process.OutputDataReceived += (sender, args) =>
         //    Console.WriteLine($"Points {GetConnectedSets(state, i)}x {i}");
         //}
 
+        for (var i = 1; i <= 6; i++)
+        {
+            int[,] newGrid = state.Clone() as int[,];
+            for (int k = 0; k < newGrid.GetLength(0); k++)
+            {
+                for (int j = 0; j < newGrid.GetLength(1); j++)
+                {
+                    if (newGrid[k, j] != i) // If the value is not i, replace it with 0
+                    {
+                        newGrid[k, j] = 0;
+                    }
+                    else
+                    {
+                        newGrid[k, j] = 1;
+                    }
+                }
+            }
+            var res = Tester.Matrix.countIslands(newGrid);
+            points += res.Where(c => c == i).Count();
+        }
+        Console.WriteLine($"Received points {points}");
         //DIE!
         process.Kill();
         Environment.Exit(1);
@@ -103,10 +134,11 @@ process.OutputDataReceived += (sender, args) =>
 process.Start();
 process.BeginOutputReadLine();
 
-process.StandardInput.WriteLine($"{grid.Length} {grid[0].Length}");
-foreach (var row in grid)
+process.StandardInput.WriteLine($"{grid.GetLength(0)} {grid.GetLength(1)}");
+for (int i = 0; i < grid.GetLength(0); i++)
 {
-    process.StandardInput.WriteLine(String.Join(" ", row));
+    string rowString = string.Join(" ", Enumerable.Range(0, grid.GetLength(1)).Select(j => grid[i, j]));
+    process.StandardInput.WriteLine(rowString);
 }
 
 process.StandardInput.WriteLine($"d {currentDice.Item1} {currentDice.Item2}");
