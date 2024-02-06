@@ -28,7 +28,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet publish -r win-x64 -p:PublishSingleFile=true -p:PublishReadyToRun=false -p:TargetFramework=net8.0 -p:Platform="Any CPU" -p:SelfContained=false -p:UseAppHost=true Tester
     - name: Update Nightly Release
       uses: andelf/nightly-release@main
       env:
