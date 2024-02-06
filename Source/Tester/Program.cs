@@ -1,10 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-//foreach (var arg in args)
-//{
-//    Console.WriteLine($"Arrrr {arg}");
-//}
-
 int[,] grid = {
     {0, 0, 1, 1, 1, 1, 0, 0},
     {0, 1, 1, 1, 1, 1, 1, 0},
@@ -15,9 +10,10 @@ int[,] grid = {
     {0, 0, 1, 1, 1, 1, 0, 0},
 };
 
+var games = Int32.Parse(args[1] ?? "1000");
 
 int[,] state = new int[grid.GetLength(0), grid.GetLength(1)];
-int games = 0;
+int rounds = 0;
 
 for (int i = 0; i < grid.GetLength(0); i++)
 {
@@ -25,13 +21,13 @@ for (int i = 0; i < grid.GetLength(0); i++)
     {
         state[i, j] = 0;
         if (grid[i, j] != 0)
-            games++;
+            rounds++;
     }
 }
 
-games /= 2;
+rounds /= 2;
 
-Console.WriteLine($"Playing {games} Games");
+Console.WriteLine($"Playing {rounds} Rounds");
 
 Console.WriteLine(Environment.CurrentDirectory);
 
@@ -56,8 +52,6 @@ process.OutputDataReceived += (sender, args) =>
 
     if (data == null || !data.StartsWith("p"))
     {
-        //Console.WriteLine($"{data}");
-        //return early
         return;
     }
 
@@ -72,21 +66,21 @@ process.OutputDataReceived += (sender, args) =>
         return;
     }
 
-    games -= 1;
+    rounds -= 1;
 
 
     state[location[1], location[0]] = choice;
     state[location[1], grid.GetLength(1) - location[0] - 1] = choice == currentDice.Item1 ? currentDice.Item2 : currentDice.Item1;
 
 
-    if (games == 0)
+    if (rounds == 0)
     {
         Console.WriteLine("Done!!!");
         var points = 0;
 
         for (var i = 1; i <= 6; i++)
         {
-            int[,] newGrid = state.Clone() as int[,];
+            var newGrid = (int[,])state.Clone();
             for (int k = 0; k < newGrid.GetLength(0); k++)
             {
                 for (int j = 0; j < newGrid.GetLength(1); j++)

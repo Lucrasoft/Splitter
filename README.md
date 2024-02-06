@@ -18,6 +18,10 @@ This is an *offline* code competition meaning that your code doesn't have  -->
 <!-- ## Expectation
 Although the first levels are doable, even by hand, the levels get trickier and harder to solve. Don't feel upset if you have a hard time reaching anything beyond level 50 or 100 or...It just get's really hard very fast.  -->
 
+## Expectation
+
+Its pretty simple to make a bot that just randomly places the numbers on valid places but it gets much harder once you actually try to make it connect the numbers for more points!
+
 ## Competition
 
 Besides the Best Score competition, you can also go for 
@@ -34,8 +38,8 @@ Ofcourse it's okay to team up. Share your idea's and approaches in your team, bu
 
 On the end of the competition you can :
 
-Deliver us your solution files. We will verify them and re-determine your highest achieved level. Keep in mind that you must provide all levels from bottom to you highest level. You cannot skip a level :smile: 
-
+Deliver us your solution as executable or script(python,js,ruby etc) and the arguments required for executable to run and we will test it and note down the score.
+There is a time limit of 10 minutes per run so if it takes longer than that to complete 1000 games you will be disqualified.
 
 ## Credits
 

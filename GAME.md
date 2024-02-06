@@ -26,7 +26,7 @@ In this example you will get 2 points
 2 2's are connected giving 1 point
 1 1 is connected also giving 1 point
 
-There are too many 4's on the board to give a point for that and theres to little 6's on the board for those to give a point
+There are too many connected 4's on the board to give a point for that and theres to little connected 6's on the board for those to give a point
 
 A example implementation can also be found in the Source/Example directory of this repo
 <!-- 
@@ -129,6 +129,9 @@ Done!!!
 The only thing you have to send is the p's the rest is what you recieve excep for the last p
 
 
+### Testing
+
+Theres a exe in the releases panel of this repo you can use to test the program as follows `./Tester.exe "commands to execute" <rounds>` so for example `./Tester.exe "node bot.js" 20`
 
 <!-- ### Solutions file
 
