@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Tester": {
+      "commandName": "Project",
+      "commandLineArgs": "\"dotnet run --project Example\"\r\n"
+    }
+  }
+}

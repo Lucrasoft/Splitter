@@ -1,5 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+
+//foreach (var arg in args)
+//{
+//    Console.WriteLine($"Arrrr {arg}");
+//}
 
 int[,] grid = {
     {0, 0, 1, 1, 1, 1, 0, 0},
@@ -40,7 +44,7 @@ System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessSt
 startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
 startInfo.WorkingDirectory = Environment.CurrentDirectory.Replace("\\Tester\\bin\\Debug\\net8.0", "");
 startInfo.FileName = "cmd.exe";
-startInfo.Arguments = "/C dotnet run --project Example";
+startInfo.Arguments = $"/C {args[0]}";
 process.StartInfo = startInfo;
 process.StartInfo.UseShellExecute = false;
 process.StartInfo.RedirectStandardOutput = true;
