@@ -10,29 +10,26 @@ int[,] grid = {
     {0, 1, 1, 1, 1, 1, 1, 0},
     {0, 0, 1, 1, 1, 1, 0, 0},
 };
-
+var points = 0;
+var i = 0; 
 var opts = Args.Parse(args);
 
-for(var i = 0; i < opts.Games; i++)
+Console.CancelKeyPress += delegate {
+    Console.WriteLine($"Games played {i}");
+    Console.WriteLine($"Points gotten {points}");
+    Console.WriteLine($"Points per game (avg) {points / i}");
+};
+
+for (; i < opts.Games; i++)
 {
-  await PlayAsync(grid, opts.Command);
+    points += await PlayAsync(grid, opts.Command);
 }
 
 static async Task<int> PlayAsync(int[,] grid, string command)
 {
     int[,] state = new int[grid.GetLength(0), grid.GetLength(1)];
-    for (int i = 0; i < grid.GetLength(0); i++)
-    {
-        for (int j = 0; j < grid.GetLength(1); j++)
-        {
-            state[i, j] = 0;
-        }
-    }
 
     var rounds = CalculateRounds(grid);
-    Console.WriteLine($"Playing {rounds} Rounds");
-
-    var currentDice = RollDice();
 
     var currentDirectory = Environment.CurrentDirectory.Replace("\\Tester\\bin\\Debug\\net8.0", "");
 
@@ -45,10 +42,13 @@ static async Task<int> PlayAsync(int[,] grid, string command)
         UseShellExecute = false,
         WorkingDirectory = currentDirectory,
         RedirectStandardOutput = true,
-        RedirectStandardInput = true
+        RedirectStandardInput = true,
     };
 
     process.StartInfo = startInfo;
+
+    var currentDice = RollDice();
+
 
     var tcs = new TaskCompletionSource<int>();
 
@@ -79,12 +79,27 @@ static async Task<int> PlayAsync(int[,] grid, string command)
 
         if (rounds == 0)
         {
-            Console.WriteLine("Done!!!");
             var points = CalculatePoints(state, grid);
             Console.WriteLine(Print2dMatrix(state));
-            Console.WriteLine($"Received points {points}");
+            try
+            {
+                process.Close();
+            }catch(Exception e)
+            {
+                //pass
+            }
+            try
+            {
+                process.Kill();
+
+            }catch(Exception e )
+            {
+
+            }
+
+
             tcs.SetResult(points);
-            process.Kill();
+            return;
         }
 
         currentDice = RollDice();
@@ -93,9 +108,11 @@ static async Task<int> PlayAsync(int[,] grid, string command)
     };
 
     process.Start();
+    //await process.StandardOutput.ReadToEndAsync();
+
     process.BeginOutputReadLine();
 
-    process.StandardInput.WriteLine($"{grid.GetLength(0)} {grid.GetLength(1)}");
+    process.StandardInput.WriteLine($"{grid.GetLength(0)} {grid.GetLength(1)} {rounds}");
 
     foreach (var line in Print2dMatrix(grid).TrimEnd().Split("\n"))
     {
