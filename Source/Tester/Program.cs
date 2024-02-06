@@ -144,8 +144,9 @@ static int CalculatePoints(int[,] state, int[,] grid)
                 }
             }
         }
+
         var res = Tester.Matrix.CountIslands(newGrid);
-        points += res.Where(c => c.Length == i).Count();
+        points += res.Where(c => c.Length == i).Count() * i;
 
         List<Tuple<int, int>> pointPlaces = new List<Tuple<int, int>>();
 
@@ -170,7 +171,7 @@ static int CalculatePoints(int[,] state, int[,] grid)
             if (arr.Any(c =>
                pointPlaces.Any(p => p.Equals(c))))
             {
-                points += 1;
+                points += i;
                 Console.WriteLine("BONUS POINTS");
             }
         }
