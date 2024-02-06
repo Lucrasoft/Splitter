@@ -39,7 +39,7 @@ Ofcourse it's okay to team up. Share your idea's and approaches in your team, bu
 On the end of the competition you can :
 
 Deliver us your solution as executable or script(python,js,ruby etc) and the arguments required for executable to run and we will test it and note down the score.
-There is a time limit of 10 minutes per run so if it takes longer than that to complete 1000 games you will be disqualified.
+There is a time limit of 10 minutes per run so if it takes longer than that to complete 200 games you will be disqualified.
 
 ## Credits
 

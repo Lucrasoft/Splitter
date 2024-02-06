@@ -11,19 +11,33 @@ int[,] grid = {
     {0, 0, 1, 1, 1, 1, 0, 0},
 };
 var points = 0;
-var i = 0; 
+var i = 0;
 var opts = Args.Parse(args);
 
-Console.CancelKeyPress += delegate {
+
+var watch = Stopwatch.StartNew();
+
+var printEnding = () =>
+{
+    watch.Stop();
     Console.WriteLine($"Games played {i}");
     Console.WriteLine($"Points gotten {points}");
     Console.WriteLine($"Points per game (avg) {points / i}");
+    Console.WriteLine($"Time taken {watch.ElapsedMilliseconds / 1000}S");
 };
+
+Console.CancelKeyPress += (sender, eventArgs) =>
+{
+    printEnding();
+};
+
 
 for (; i < opts.Games; i++)
 {
     points += await PlayAsync(grid, opts.Command);
 }
+
+printEnding();
 
 static async Task<int> PlayAsync(int[,] grid, string command)
 {
@@ -84,7 +98,8 @@ static async Task<int> PlayAsync(int[,] grid, string command)
             try
             {
                 process.Close();
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 //pass
             }
@@ -92,7 +107,8 @@ static async Task<int> PlayAsync(int[,] grid, string command)
             {
                 process.Kill();
 
-            }catch(Exception e )
+            }
+            catch (Exception e)
             {
 
             }
@@ -231,13 +247,13 @@ struct Args
             Console.WriteLine("No program provided to run");
             Environment.Exit(1);
         }
-        
-        var games = Int32.Parse((args.Length >= 2 ? args[1] : "1000"));
+
+        var games = Int32.Parse((args.Length >= 2 ? args[1] : "200"));
         var command = args[0];
         return new Args(command, games);
     }
 
-    private Args(string command,  int games)
+    private Args(string command, int games)
     {
         this.Command = command;
         this.Games = games;
