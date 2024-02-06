@@ -1,8 +1,4 @@
-﻿using AForge.Imaging.Filters;
-using AForge.Imaging;
-using System.Drawing;
-
-namespace Tester;
+﻿namespace Tester;
 
 public class Matrix
 {

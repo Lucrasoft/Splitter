@@ -10,7 +10,7 @@ int[,] grid = {
     {0, 0, 1, 1, 1, 1, 0, 0},
 };
 
-var games = Int32.Parse(args[1] ?? "1000");
+var games = Int32.Parse((args.Length >= 2 ? args[1] : "1000"));
 
 int[,] state = new int[grid.GetLength(0), grid.GetLength(1)];
 int rounds = 0;
