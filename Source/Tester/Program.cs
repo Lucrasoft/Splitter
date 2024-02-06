@@ -99,6 +99,39 @@ process.OutputDataReceived += (sender, args) =>
             }
             var res = Tester.Matrix.CountIslands(newGrid);
             points += res.Where(c => c.Length == i).Count();
+
+            List<Tuple<int,int>> pointPlaces = new List<Tuple<int, int>>();
+
+            for (int x = 0; x < grid.GetLength(0); x += 1)
+            {
+                for (int y = 0; y < grid.GetLength(1); y += 1)
+                {
+                    if (grid[x,y] == 2)
+                    {
+                        pointPlaces.Add(new Tuple<int,int>(
+                            x,y
+                            ));
+                    }
+
+
+                  
+                }
+            }
+
+            foreach(var arr in res.Where(c => c.Length == i))
+            {
+                if(arr.Any(c=>
+                   pointPlaces.Any(p=>p.Equals(c)))) {
+                    points += 1;
+                    Console.WriteLine("BONUS POINTS");
+                }
+            }
+
+        }
+        for (int i = 0; i < state.GetLength(0); i++)
+        {
+            string rowString = string.Join(" ", Enumerable.Range(0, state.GetLength(1)).Select(j => state[i, j]));
+            Console.WriteLine(rowString);
         }
         Console.WriteLine($"Received points {points}");
         //DIE!
