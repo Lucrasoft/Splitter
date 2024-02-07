@@ -21,6 +21,12 @@ public class ScoreTests
         {3,1,1,3,1,1 },
         {0,1,1,1,1,0 },
     };
+    static readonly int[,] GridF =
+    {
+       {3,3},
+       {1,1},
+       {2,2}
+    };
 
     private static int CalculatePoints(int[,] grid, int[,] state)
     {
@@ -114,5 +120,18 @@ public class ScoreTests
         };
 
         Assert.Equal(15, CalculatePoints(Grids.GridB, state));
+    }
+
+    [Fact]
+    public void TestWeirdGrid()
+    {
+        int[,] state =
+        {
+            {2,2 },
+            {4,4 },
+            {4,4 },
+        };
+
+        Assert.Equal(15, CalculatePoints(GridF, state));
     }
 }
