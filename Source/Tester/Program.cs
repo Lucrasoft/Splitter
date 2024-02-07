@@ -2,10 +2,7 @@
 using System.Text;
 using Tester;
 
-const int EMPTY = 0;
-const int FIELD = 1;
-const int STAR = 2;
-const int HEART = 3;
+
 
 var points = 0;
 var i = 0;
@@ -84,7 +81,7 @@ static async Task<int> PlayAsync(int[,] grid, string command)
             return;
         }
 
-        if (grid[location[1], location[0]] == EMPTY || state[location[1], location[0]] != EMPTY)
+        if (grid[location[1], location[0]] == Grids.EMPTY || state[location[1], location[0]] != Grids.EMPTY)
         {
             Logger.Log($"Cant place on invalid tile {location[0]},{location[1]}");
             return;
@@ -97,7 +94,7 @@ static async Task<int> PlayAsync(int[,] grid, string command)
 
         if (rounds == 0)
         {
-            var points = CalculatePoints(state, grid);
+            var points = Points.CalculatePoints(grid, state);
             Logger.Log(Print2dMatrix(state));
             try
             {
@@ -145,62 +142,7 @@ static async Task<int> PlayAsync(int[,] grid, string command)
 
 
 
-static int CalculatePoints(int[,] state, int[,] grid)
-{
-    //
-    var points = 0;
-    for (var i = 1; i <= 6; i++)
-    {
-        var stateCopy = (int[,])state.Clone();
-        for (int k = 0; k < stateCopy.GetLength(0); k++)
-        {
-            for (int j = 0; j < stateCopy.GetLength(1); j++)
-            {
-                if (stateCopy[k, j] != i) // If the value is not i, replace it with 0
-                {
-                    stateCopy[k, j] = EMPTY;
-                }
-                else
-                {
-                    stateCopy[k, j] = 1;
-                }
-            }
-        }
 
-        var res = Matrix.CountIslands(stateCopy);
-        points += res.Where(c => c.Length == i).Count() * i;
-
-        List<Point> pointPlaces = new List<Point>();
-
-        for (int x = 0; x < grid.GetLength(0); x += 1)
-        {
-            for (int y = 0; y < grid.GetLength(1); y += 1)
-            {
-                if (grid[x, y] == STAR)
-                {
-                    pointPlaces.Add(new Point(
-                        x, y
-                        ));
-                }
-
-
-
-            }
-        }
-
-        foreach (var arr in res.Where(c => c.Length == i))
-        {
-            if (arr.Any(c =>
-               pointPlaces.Any(p => p.Equals(c))))
-            {
-                points += i;
-                Logger.Log("BONUS POINTS");
-            }
-        }
-
-    }
-    return points;
-}
 
 static (int, int) RollDice()
 {
@@ -220,7 +162,7 @@ static int CalculateRounds(int[,] grid)
     {
         for (int j = 0; j < grid.GetLength(1); j++)
         {
-            if (grid[i, j] != EMPTY)
+            if (grid[i, j] != Grids.EMPTY)
                 rounds++;
         }
     }
