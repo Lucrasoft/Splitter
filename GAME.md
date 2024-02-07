@@ -20,6 +20,8 @@ In this example you will get 3 points
 
 There are too many connected 4's on the board to give a point for that and theres to little connected 6's on the board for those to give a point
 
+You can also [watch this youtube video](https://www.youtube.com/watch?v=o74s0IYA3B0) for a simple guide on how its played
+
 A example implementation can also be found in the Source/Example directory of this repo
 
 ## Details
@@ -28,7 +30,7 @@ The top left corner has the coordinate (0,0). The X coordinate increases to the 
 
 ### Input Data
 
-1. When your program first runs via the Tester it will send a line with the sizes of the grid <width> <height> 
+1. When your program first runs via the Tester it will send a line with the sizes of the grid <width> <height> <rounds>
 2. Then it will send the entire grid
 3. The first dice
 4. A 2 in the grid means its a bonus space
@@ -41,7 +43,7 @@ p <number> <x>,<y>
 Heres a example loop:
 
 ```
-7 8
+7 8 22
 0 0 1 1 1 1 0 0
 0 1 1 1 1 1 1 0
 1 1 1 1 1 1 1 1
