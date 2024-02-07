@@ -2,8 +2,6 @@
 using System.Text;
 using Tester;
 
-
-
 var points = 0;
 var i = 0;
 var opts = Args.Parse(args);
@@ -29,14 +27,14 @@ Console.CancelKeyPress += (sender, eventArgs) =>
 
 for (; i < opts.Games; i++)
 {
-    points += await PlayAsync(Grids.GridB, opts.Command);
+    points += await PlayAsync(new Grid(Grids.GridA), opts.Command);
 }
 
 printEnding();
 
-static async Task<int> PlayAsync(int[,] grid, string command)
+static async Task<int> PlayAsync(Grid grid, string command)
 {
-    int[,] state = new int[grid.GetLength(0), grid.GetLength(1)];
+    int[,] state = new int[grid.Height(), grid.Width()];
 
     var rounds = CalculateRounds(grid);
 
@@ -74,6 +72,7 @@ static async Task<int> PlayAsync(int[,] grid, string command)
         var items = data.Split(" ");
         var choice = Int32.Parse(items[1]);
         var location = items[2].Split(",").Select(c => Int32.Parse(c)).ToArray();
+        var point = new Point(location[0], location[1]);
 
         if (choice != currentDice.Item1 && choice != currentDice.Item2)
         {
@@ -81,16 +80,23 @@ static async Task<int> PlayAsync(int[,] grid, string command)
             return;
         }
 
-        if (grid[location[1], location[0]] == Grids.EMPTY || state[location[1], location[0]] != Grids.EMPTY)
+        if (grid.Get(point) == Grids.EMPTY)
         {
-            Logger.Log($"Cant place on invalid tile {location[0]},{location[1]}");
+            Logger.Log($"Cant place on invalid tile it non placeable {location[0]},{location[1]}");
+            return;
+        }
+
+
+        if (state[point.y, point.x] != Grids.EMPTY)
+        {
+            Logger.Log($"Cant place on invalid tile it already has something {location[0]},{location[1]}");
             return;
         }
 
         rounds -= 1;
 
-        state[location[1], location[0]] = choice;
-        state[location[1], grid.GetLength(1) - location[0] - 1] = choice == currentDice.Item1 ? currentDice.Item2 : currentDice.Item1;
+        state[point.y, point.x] = choice;
+        state[point.y, grid.Width() - point.x - 1] = choice == currentDice.Item1 ? currentDice.Item2 : currentDice.Item1;
 
         if (rounds == 0)
         {
@@ -113,8 +119,6 @@ static async Task<int> PlayAsync(int[,] grid, string command)
             {
                 //pass
             }
-
-
             tcs.SetResult(points);
             return;
         }
@@ -128,9 +132,9 @@ static async Task<int> PlayAsync(int[,] grid, string command)
 
     process.BeginOutputReadLine();
 
-    process.StandardInput.WriteLine($"{grid.GetLength(0)} {grid.GetLength(1)} {rounds}");
+    process.StandardInput.WriteLine($"{grid.Width()} {grid.Height()} {rounds}");
 
-    foreach (var line in Print2dMatrix(grid).TrimEnd().Split("\n"))
+    foreach (var line in Print2dMatrix(grid._grid).TrimEnd().Split("\n"))
     {
         process.StandardInput.WriteLine(line);
     }
@@ -140,16 +144,15 @@ static async Task<int> PlayAsync(int[,] grid, string command)
     return await tcs.Task;
 }
 
-static int CalculateRounds(int[,] grid)
+static int CalculateRounds(Grid grid)
 {
     int rounds = 0;
 
-    for (int i = 0; i < grid.GetLength(0); i++)
+    foreach (var point in grid)
     {
-        for (int j = 0; j < grid.GetLength(1); j++)
+        if (grid.Get(point) != Grids.EMPTY)
         {
-            if (grid[i, j] != Grids.EMPTY)
-                rounds++;
+            rounds++;
         }
     }
 

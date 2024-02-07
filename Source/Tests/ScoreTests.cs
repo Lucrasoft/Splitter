@@ -22,6 +22,11 @@ public class ScoreTests
         {0,1,1,1,1,0 },
     };
 
+    private static int CalculatePoints(int[,] grid, int[,] state)
+    {
+        return Points.CalculatePoints(new Grid(grid), state);
+    }
+
     [Fact]
     public void TestAllGroups()
     {
@@ -34,7 +39,7 @@ public class ScoreTests
             { 0,0,0,0,0 },
         };
 
-        Assert.Equal(10, Points.CalculatePoints(GridC, state));
+        Assert.Equal(10, CalculatePoints(GridC, state));
     }
 
 
@@ -50,7 +55,7 @@ public class ScoreTests
             { 0,0,0,0,0 },
         };
 
-        Assert.Equal(0, Points.CalculatePoints(GridC, state));
+        Assert.Equal(0, CalculatePoints(GridC, state));
     }
 
     [Fact]
@@ -62,7 +67,7 @@ public class ScoreTests
             { 1 }
         };
 
-        Assert.Equal(2, Points.CalculatePoints(GridD, state));
+        Assert.Equal(2, CalculatePoints(GridD, state));
     }
 
     [Fact]
@@ -76,7 +81,7 @@ public class ScoreTests
             { 0,6,6,6,6,0 },
         };
 
-        Assert.Equal(5, Points.CalculatePoints(GridE, state));
+        Assert.Equal(5, CalculatePoints(GridE, state));
     }
 
     [Fact]
@@ -91,7 +96,7 @@ public class ScoreTests
             { 0,0,0,0,0 },
         };
 
-        Assert.Equal(4, Points.CalculatePoints(GridC, state));
+        Assert.Equal(4, CalculatePoints(GridC, state));
     }
 
     [Fact]
@@ -108,6 +113,6 @@ public class ScoreTests
             {2,2,1,0,0,1,2,1 },
         };
 
-        Assert.Equal(15, Points.CalculatePoints(Grids.GridB, state));
+        Assert.Equal(15, CalculatePoints(Grids.GridB, state));
     }
 }

@@ -44,7 +44,7 @@ public class Matrix
                     int root = dus.Find(j * m + k);
                     if (!islandSets.ContainsKey(root))
                         islandSets[root] = new List<Point>();
-                    islandSets[root].Add(new Point(j, k));
+                    islandSets[root].Add(new Point(k, j));
                 }
             }
         }

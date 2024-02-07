@@ -2,9 +2,8 @@
 
 public class Points
 {
-    public static int CalculatePoints(int[,] grid, int[,] state)
+    public static int CalculatePoints(Grid grid, int[,] state)
     {
-        //
         var points = 0;
         for (var i = 1; i <= 6; i++)
         {
@@ -25,45 +24,39 @@ public class Points
             }
 
             var res = Matrix.CountIslands(stateCopy);
-            points += res.Where(c => c.Length == i).Count() * i;
+            var received = res.Where(c => c.Length == i).Count() * i;
+            points += received;
+            Logger.Log($"Groups of {i} points {received}");
 
-            List<Point> pointPlaces = [];
+            List<Point> starPlaces = [];
             List<Point> heartPlaces = [];
 
-            for (int x = 0; x < grid.GetLength(0); x += 1)
+            foreach (var point in grid)
             {
-                for (int y = 0; y < grid.GetLength(1); y += 1)
+                if (grid.Get(point) == Grids.STAR)
                 {
-                    if (grid[x, y] == Grids.STAR)
-                    {
-                        pointPlaces.Add(new Point(
-                            x, y
-                            ));
-                    }
-                    if (grid[x, y] == Grids.HEART)
-                    {
-                        heartPlaces.Add(new Point(
-                            x, y));
-                    }
-
-
+                    starPlaces.Add(point);
+                }
+                else if (grid.Get(point) == Grids.HEART)
+                {
+                    heartPlaces.Add(point);
                 }
             }
 
             foreach (var arr in res.Where(c => c.Length == i))
             {
                 if (arr.Any(c =>
-                   pointPlaces.Any(p => p.Equals(c))))
+                   starPlaces.Any(p => p.Equals(c))))
                 {
                     points += i;
-                    Logger.Log("BONUS POINTS");
+                    Logger.Log($"Star points {i}");
                 }
             }
 
             var heartsReached = 0;
             foreach (var star in heartPlaces)
             {
-                if (state[star.x, star.y] == i)
+                if (state[star.y, star.x] == i)
                 {
                     heartsReached += 1;
                 }
@@ -72,6 +65,7 @@ public class Points
             if (heartsReached != 0 && heartsReached == heartPlaces.Count)
             {
                 points += 5;
+                Logger.Log("Heart points 5");
             }
         }
         return points;
