@@ -56,7 +56,7 @@ static async Task<int> PlayAsync(int[,] grid, string command)
 
     process.StartInfo = startInfo;
 
-    var currentDice = RollDice();
+    var currentDice = RNG.RollDices();
 
 
     var tcs = new TaskCompletionSource<int>();
@@ -119,7 +119,7 @@ static async Task<int> PlayAsync(int[,] grid, string command)
             return;
         }
 
-        currentDice = RollDice();
+        currentDice = RNG.RollDices();
 
         process.StandardInput.WriteLine($"d {currentDice.Item1} {currentDice.Item2}");
     };
@@ -138,20 +138,6 @@ static async Task<int> PlayAsync(int[,] grid, string command)
     process.StandardInput.WriteLine($"d {currentDice.Item1} {currentDice.Item2}");
 
     return await tcs.Task;
-}
-
-
-
-
-
-static (int, int) RollDice()
-{
-    Random rnd = new Random();
-
-    return (
-        rnd.Next(1, 7),
-        rnd.Next(1, 7)
-    );
 }
 
 static int CalculateRounds(int[,] grid)
@@ -182,4 +168,3 @@ static string Print2dMatrix(int[,] m)
     }
     return res.ToString();
 }
-
