@@ -44,8 +44,8 @@ static async Task<int> PlayAsync(Grid grid, string command)
     var startInfo = new ProcessStartInfo
     {
         WindowStyle = ProcessWindowStyle.Hidden,
-        FileName = "cmd.exe",
-        Arguments = $"/C {command}",
+        FileName = IsWindows() ? "cmd.exe" : "/bin/bash",
+        Arguments = IsWindows() ? $"/C {command}" : $"-c \"{command}\"",
         UseShellExecute = false,
         WorkingDirectory = currentDirectory,
         RedirectStandardOutput = true,
@@ -82,21 +82,25 @@ static async Task<int> PlayAsync(Grid grid, string command)
 
         if (grid.Get(point) == Grids.EMPTY)
         {
-            Logger.Log($"Cant place on invalid tile it non placeable {location[0]},{location[1]}");
+            Logger.Log($"Can't place, tile blank / non-placeable place: {point.x},{point.y}");
             return;
         }
 
 
         if (state[point.y, point.x] != Grids.EMPTY)
         {
-            Logger.Log($"Cant place on invalid tile it already has something {location[0]},{location[1]}");
+            Logger.Log($"Can't place on invalid tile it already has something place: {point.x},{point.y} value:{state[point.y, point.x]}");
             return;
         }
+
 
         rounds -= 1;
 
         state[point.y, point.x] = choice;
         state[point.y, grid.Width() - point.x - 1] = choice == currentDice.Item1 ? currentDice.Item2 : currentDice.Item1;
+
+        // Logger.Log("SERVRE GRID ---");
+        // Logger.Log(Print2dMatrix(state));
 
         if (rounds == 0)
         {
@@ -159,6 +163,11 @@ static int CalculateRounds(Grid grid)
     rounds /= 2;
 
     return rounds;
+}
+
+static bool IsWindows()
+{
+    return System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows);
 }
 
 static string Print2dMatrix(int[,] m)
