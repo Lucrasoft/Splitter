@@ -20,7 +20,7 @@ function rollDice(min: number, max: number): number {
 let gridIdx = 0;
 
 function onLineRead(line: string) {
-    console.log(`>${line}`)
+    // console.log(`>${line}`)
     if (stage === Stages.Data) {
         const data = line.split(" ").map(Number);
         width = data[0];
@@ -47,7 +47,7 @@ function onLineRead(line: string) {
             y = rollDice(0, height );
         }
         grid[y][x] = first;
-        console.log(`--- GRID --- ${grid.map(x=>x.join(" ").replaceAll("-1", "X")).join("\n")}`)
+        // console.log(`--- GRID --- ${grid.map(x=>x.join(" ").replaceAll("-1", "X")).join("\n")}`)
         console.log(`p ${first} ${x},${y-1}`);
     }
 }

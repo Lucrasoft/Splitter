@@ -34,9 +34,7 @@ printEnding();
 
 static async Task<int> PlayAsync(Grid grid, string command)
 {
-    int[,] state = new int[grid.Height(), grid.Width()];
-
-    var rounds = CalculateRounds(grid);
+    var game = new Game(grid);
 
     var currentDirectory = Environment.CurrentDirectory.Replace("\\Tester\\bin\\Debug\\net8.0", "");
 
@@ -54,9 +52,6 @@ static async Task<int> PlayAsync(Grid grid, string command)
 
     process.StartInfo = startInfo;
 
-    var currentDice = RNG.RollDices();
-
-
     var tcs = new TaskCompletionSource<int>();
 
     process.OutputDataReceived += (sender, args) =>
@@ -73,97 +68,60 @@ static async Task<int> PlayAsync(Grid grid, string command)
         var choice = Int32.Parse(items[1]);
         var location = items[2].Split(",").Select(c => Int32.Parse(c)).ToArray();
         var point = new Point(location[0], location[1]);
-
-        if (choice != currentDice.Item1 && choice != currentDice.Item2)
+        try
         {
-            Logger.Log($"{choice} was not rolled please try again!");
-            return;
-        }
+            game.Place(point, choice);
 
-        if (grid.Get(point) == Grids.EMPTY)
+            if (game.Rounds == 0)
+            {
+                var points = game.GetPoints();
+                Logger.Log(Print2dMatrix(game.State));
+                try
+                {
+                    process.Close();
+                }
+                catch (Exception e)
+                {
+                    //pass
+                }
+                try
+                {
+                    process.Kill();
+
+                }
+                catch (Exception e)
+                {
+                    //pass
+                }
+                tcs.SetResult(points);
+                return;
+            }
+
+            game.CurrentDice = Game.RollDices();
+            process.StandardInput.WriteLine($"d {game.CurrentDice.Item1} {game.CurrentDice.Item2}");
+        }
+        catch (Exception e)
         {
-            Logger.Log($"Can't place, tile blank / non-placeable place: {point.x},{point.y}");
-            return;
+            Logger.Log(e.Message);
         }
-
-
-        if (state[point.y, point.x] != Grids.EMPTY)
-        {
-            Logger.Log($"Can't place on invalid tile it already has something place: {point.x},{point.y} value:{state[point.y, point.x]}");
-            return;
-        }
-
-
-        rounds -= 1;
-
-        state[point.y, point.x] = choice;
-        state[point.y, grid.Width() - point.x - 1] = choice == currentDice.Item1 ? currentDice.Item2 : currentDice.Item1;
-
-        // Logger.Log("SERVRE GRID ---");
-        // Logger.Log(Print2dMatrix(state));
-
-        if (rounds == 0)
-        {
-            var points = Points.CalculatePoints(grid, state);
-            Logger.Log(Print2dMatrix(state));
-            try
-            {
-                process.Close();
-            }
-            catch (Exception e)
-            {
-                //pass
-            }
-            try
-            {
-                process.Kill();
-
-            }
-            catch (Exception e)
-            {
-                //pass
-            }
-            tcs.SetResult(points);
-            return;
-        }
-
-        currentDice = RNG.RollDices();
-
-        process.StandardInput.WriteLine($"d {currentDice.Item1} {currentDice.Item2}");
     };
 
     process.Start();
 
     process.BeginOutputReadLine();
-
-    process.StandardInput.WriteLine($"{grid.Width()} {grid.Height()} {rounds}");
+    process.StandardInput.WriteLine($"{grid.Width()} {grid.Height()} {game.Rounds}");
 
     foreach (var line in Print2dMatrix(grid._grid).TrimEnd().Split("\n"))
     {
         process.StandardInput.WriteLine(line);
     }
 
-    process.StandardInput.WriteLine($"d {currentDice.Item1} {currentDice.Item2}");
+    process.StandardInput.WriteLine($"d {game.CurrentDice.Item1} {game.CurrentDice.Item2}");
 
     return await tcs.Task;
 }
 
-static int CalculateRounds(Grid grid)
-{
-    int rounds = 0;
 
-    foreach (var point in grid)
-    {
-        if (grid.Get(point) != Grids.EMPTY)
-        {
-            rounds++;
-        }
-    }
-
-    rounds /= 2;
-
-    return rounds;
-}
 
 static bool IsWindows()
 {

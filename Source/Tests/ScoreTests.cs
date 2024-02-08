@@ -4,24 +4,24 @@ namespace Tests;
 
 public class ScoreTests
 {
-    static readonly int[,] GridC =
+    public static readonly int[,] GridC =
         {
             { 0,0,0,0,0 },
             { 1,1,1,1,1 },
             { 1,1,1,1,1 },
             { 0,0,0,0,0 },
         };
-    static readonly int[,] GridD =
+    public static readonly int[,] GridD =
         {
             { 2 }
         };
-    static readonly int[,] GridE =
+    public static readonly int[,] GridE =
     {
         {0,1,1,1,1,0 },
         {3,1,1,3,1,1 },
         {0,1,1,1,1,0 },
     };
-    static readonly int[,] GridF =
+    public static readonly int[,] GridF =
     {
        {3,3},
        {1,1},
