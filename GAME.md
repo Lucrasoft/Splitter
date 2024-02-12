@@ -54,8 +54,7 @@ The top left corner has the coordinate (0,0). The X coordinate increases to the 
 1. When your program first runs via the Tester it will send a line with the sizes of the grid <width> <height> <rounds>
 2. Then it will send the entire grid
 3. The first dice
-4. A 2 in the grid means its a bonus space
-5. You cannot place numbers on 0's
+4. You cannot place numbers on 0's
 
 After that you send the response back in the following format
 
@@ -64,58 +63,58 @@ p <number> <x>,<y>
 Heres a example loop:
 
 ```
-7 8 22
-0 0 1 1 1 1 0 0
-0 1 1 1 1 1 1 0
+8 7 22
+1 1 1 0 0 1 3 1
 1 1 1 1 1 1 1 1
-2 1 1 1 1 1 1 2
+0 3 1 1 1 1 1 0
+0 1 1 0 0 1 1 0
+0 1 1 1 3 1 1 0
 1 1 1 1 1 1 1 1
-0 1 1 1 1 1 1 0
-0 0 1 1 1 1 0 0
-d 2 4
-p 2 3,0
-d 2 3
-p 2 1,3
+1 2 1 0 0 1 2 1
+d 6 1
+p 6 2,3
+d 3 4
+p 3 2,4
+d 6 1
+p 6 1,1
+d 3 6
+p 3 1,5
+d 6 4
+p 6 0,5
+d 3 3
+p 3 1,3
+d 2 5
+p 2 1,2
+d 3 1
+p 3 0,6
 d 1 1
-p 1 2,4
+p 1 3,5
+d 1 6
+p 1 1,4
+d 1 1
+p 1 3,1
+d 1 2
+p 1 2,1
+d 4 3
+p 4 0,0
+d 6 3
+p 6 3,4
+d 5 2
+p 5 1,6
+d 6 6
+p 6 0,1
 d 5 4
 p 5 2,2
+d 4 5
+p 4 3,2
 d 5 5
-p 5 2,3
-d 2 3
-p 2 2,5
-d 1 5
-p 1 2,6
-d 3 1
-p 3 0,2
-d 5 3
-p 5 0,3
-d 5 1
-p 5 1,4
-d 5 2
-p 5 3,2
-d 4 1
-p 4 3,6
-d 5 4
-p 5 3,4
-d 2 3
-p 2 2,1
-d 2 2
-p 2 3,3
-d 3 5
-p 3 1,2
+p 5 2,6
+d 1 2
+p 1 2,5
 d 3 4
-p 3 1,1
-d 2 5
-p 2 3,1
-d 1 5
-p 1 2,0
-d 2 1
-p 2 3,5
-d 2 5
-p 2 1,5
-d 1 4
-p 1 0,4
+p 3 2,0
+d 2 3
+p 2 1,0
 ```
 
 The only thing you have to send is the p's the rest is what you recieve excep for the last p

@@ -23,6 +23,7 @@ for (int i = 0; i < rounds; i++)
     Thread.Sleep(10);
     var roll = Console.ReadLine();
     if (roll == null) continue;
+    Console.WriteLine(roll);
 
     var nums = roll.Split(" ");
     var first = Int32.Parse(nums[1]);

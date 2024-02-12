@@ -78,18 +78,11 @@ static async Task<int> PlayAsync(Grid grid, string command)
                 Logger.Log(Print2dMatrix(game.State));
                 try
                 {
-                    process.Close();
-                }
-                catch (Exception e)
-                {
-                    //pass
-                }
-                try
-                {
                     process.Kill();
-
+                    process.Close();
+                    process.Dispose();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     //pass
                 }
@@ -120,8 +113,6 @@ static async Task<int> PlayAsync(Grid grid, string command)
 
     return await tcs.Task;
 }
-
-
 
 static bool IsWindows()
 {
