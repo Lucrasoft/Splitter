@@ -61,59 +61,61 @@ p <number> <x>,<y>
 
 Heres a example loop:
 
+(everything prefixed with # is send to your program)
+
 ```
-8 7 22
-1 1 1 0 0 1 3 1
-1 1 1 1 1 1 1 1
-0 3 1 1 1 1 1 0
-0 1 1 0 0 1 1 0
-0 1 1 1 3 1 1 0
-1 1 1 1 1 1 1 1
-1 2 1 0 0 1 2 1
-d 6 1
-p 6 2,3
-d 3 4
-p 3 2,4
-d 6 1
-p 6 1,1
-d 3 6
-p 3 1,5
-d 6 4
-p 6 0,5
-d 3 3
-p 3 1,3
-d 2 5
-p 2 1,2
-d 3 1
-p 3 0,6
-d 1 1
-p 1 3,5
-d 1 6
-p 1 1,4
-d 1 1
-p 1 3,1
-d 1 2
-p 1 2,1
-d 4 3
-p 4 0,0
-d 6 3
-p 6 3,4
-d 5 2
-p 5 1,6
-d 6 6
-p 6 0,1
-d 5 4
-p 5 2,2
-d 4 5
-p 4 3,2
-d 5 5
-p 5 2,6
-d 1 2
-p 1 2,5
-d 3 4
-p 3 2,0
-d 2 3
-p 2 1,0
+# 8 7 22
+# 0 0 1 1 1 1 0 0
+# 0 1 1 1 1 1 1 0
+# 1 1 1 1 1 1 1 1
+# 2 1 1 1 1 1 1 2
+# 1 1 1 1 1 1 1 1
+# 0 1 1 1 1 1 1 0
+# 0 0 1 1 1 1 0 0
+# 4 1
+4 2 1
+# 1 2
+1 3 2
+# 5 3
+5 3 1
+# 6 2
+6 1 5
+# 2 5
+2 0 2
+# 4 3
+4 2 4
+# 4 1
+4 3 6
+# 5 4
+5 2 6
+# 4 2
+4 2 3
+# 1 5
+1 0 3
+# 5 1
+5 0 4
+# 4 5
+4 1 1
+# 4 1
+4 3 4
+# 4 3
+4 2 0
+# 1 6
+1 2 5
+# 5 3
+5 3 3
+# 1 3
+1 3 0
+# 1 3
+1 1 3
+# 6 2
+6 2 2
+# 2 2
+2 1 4
+# 2 1
+2 1 2
+# 5 4
+5 3 5
 ```
 
 The only thing you have to send is the p's the rest is what you receive.
@@ -121,7 +123,27 @@ The only thing you have to send is the p's the rest is what you receive.
 
 ### Testing
 
-Theres a exe in the releases panel of this repo you can use to test the program as follows `./Tester.exe "commands to execute" <games>` so for example `./Tester.exe "node bot.js" 20`
+Theres a exe in the releases panel of this repo
+
+```
+$ ./Tester.exe
+
+Description:
+  Try your splitter bot with the tester program
+
+Usage:
+  Tester [options]
+
+Options:
+  --games <games>      Amount of games to play before spitting out the results [default: 500]
+  --silent             Makes it so all output is hidden to speed up the program [default: False]
+  --layout <layout>    Layout to use there's 2, 1 is without the hearts 2 is with the hearts [default: 1]
+  --command <command>  Command to execute []
+  --version            Show version information
+  -?, -h, --help       Show help and usage information
+```
+
+Heres a example on how to run the typescript example `./Tester.exe --games 200 --layout 2 --command "bun typescript/index.ts"` or the c# example `dotnet run --project Tester --games 200 --layout 2 --command "dotnet run --project Example"`
 
 ### Complex
 

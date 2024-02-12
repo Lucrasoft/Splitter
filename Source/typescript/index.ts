@@ -37,8 +37,8 @@ function onLineRead(line: string) {
         }
     } else if (stage === Stages.Dices) {
         const rollData = line.split(" ").map(Number);
-        const first = rollData[1];
-        const second = rollData[2];
+        const first = rollData[0];
+        const second = rollData[1];
         let x: number=0, y: number=0, limit = 5000;
   
         while(true){
@@ -48,7 +48,7 @@ function onLineRead(line: string) {
         }
         grid[y][x] = first;
         // console.log(`--- GRID --- ${grid.map(x=>x.join(" ").replaceAll("-1", "X")).join("\n")}`)
-        console.log(`p ${first} ${x},${y-1}`);
+        console.log(`${first} ${x} ${y - 1}`);
     }
 }
 
