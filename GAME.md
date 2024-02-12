@@ -33,7 +33,7 @@ On the first move, we provide you with a digital version of the sheet, the meani
 
 ## Example
 
-![alt text](image.png)
+![alt text](grid.png)
 
 In this example you will get 3 points
 2 2's are connected giving 2 point
