@@ -29,7 +29,7 @@ On the first move, we provide you with a digital version of the sheet, the meani
 - You can choose where to place one number on the left side of the grid and the other will be mirrored to the other side
 - If you get 4 connecting 4's you get 4 points, 5 connecting 5's you get 5 points, and so on.
 - You need the EXACT number of connections if you get more or less than the number you will get no points
-- A bonus space is present on each half of the pattern, and a scored group that contains this starred space has its points doubled
+- A star space is present on each half of the pattern, and a scored group that contains this starred space has its points doubled
 
 ## Example
 
@@ -51,10 +51,9 @@ The top left corner has the coordinate (0,0). The X coordinate increases to the 
 
 ### Input Data
 
-1. When your program first runs via the Tester it will send a line with the sizes of the grid <width> <height> <rounds>
+1. When your program first runs via the [Tester](#testing) it will send a line with the sizes of the grid <width> <height> <rounds>
 2. Then it will send the entire grid
-3. The first dice
-4. You cannot place numbers on 0's
+3. Then it will send the first dice results
 
 After that you send the response back in the following format
 
@@ -117,7 +116,7 @@ d 2 3
 p 2 1,0
 ```
 
-The only thing you have to send is the p's the rest is what you recieve excep for the last p
+The only thing you have to send is the p's the rest is what you receive.
 
 
 ### Testing
@@ -126,4 +125,4 @@ Theres a exe in the releases panel of this repo you can use to test the program 
 
 ### Complex
 
-Your solution can be as simple as taking a random number or as complex as taking into account the bonus fields (2) and more
+Your solution can be as simple as taking a random number or as complex as taking into account the star and heart fields and more
