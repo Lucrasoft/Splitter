@@ -2,7 +2,7 @@
   "profiles": {
     "Tester": {
       "commandName": "Project",
-      "commandLineArgs": "\"dotnet run --project Example\" 20\r\n"
+      "commandLineArgs": "--command \"dotnet run --project Example\" --games 3 --seed HelloWorld"
     },
     "WSL": {
       "commandName": "WSL2",

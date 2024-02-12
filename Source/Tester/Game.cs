@@ -45,12 +45,12 @@ public class Game
         return Points.CalculatePoints(Grid, State);
     }
 
-    static readonly Random rnd = new();
+    public static Random RND = new();
     public static (int, int) RollDices()
     {
         return (
-            rnd.Next(1, 7),
-            rnd.Next(1, 7)
+            RND.Next(1, 7),
+            RND.Next(1, 7)
         );
     }
 

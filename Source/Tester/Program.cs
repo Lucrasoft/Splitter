@@ -9,11 +9,13 @@ class Program
     /// </summary>
     /// <param name="games">Amount of games to play before spitting out the results</param>
     /// <param name="silent">Makes it so all output is hidden to speed up the program</param>
+    /// <param name="seed">The random seed to use this will make it so you can retry the same rolls</param>
     /// <param name="layout">Layout to use there's 2, 1 is without the hearts 2 is with the hearts</param>
     /// <param name="command">Command to execute</param>
     /// <returns></returns>
-    static async Task<int> Main(int games = 500, bool silent = false, int layout = 1, string[] command = null)
+    static async Task<int> Main(int games = 500, bool silent = false, string? seed = null, int layout = 1, string[] command = null)
     {
+
         var points = 0;
         var i = 0;
 
@@ -35,15 +37,32 @@ class Program
             printEnding();
         };
 
-
         for (; i < games; i++)
         {
+            if (seed is not null) Game.RND = new Random(CustomHash(seed) + i);
             points += await PlayAsync(new Grid(layout == 1 ? Grids.GridA : Grids.GridB), string.Join(" ", command));
         }
 
         printEnding();
 
         return 0;
+    }
+    /// <summary>
+    ///     A common hash implementation
+    ///     Useful to be able to get a determined output
+    /// </summary>
+    /// <param name="input">Strng to "hash"</param>
+    /// <returns></returns>
+    public static int CustomHash(string input)
+    {
+        int hash = 0;
+
+        foreach (char c in input)
+        {
+            hash = (hash * 31) + c;
+        }
+
+        return hash;
     }
 
     static async Task<int> PlayAsync(Grid grid, string command)
