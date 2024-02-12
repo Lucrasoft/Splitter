@@ -123,6 +123,11 @@ The only thing you have to send is the p's the rest is what you receive.
 
 ### Testing
 
+Tester is a program that "tests" and runs your bot (The command argument) every game and kills it after the game is done.  
+
+> [!TIP]
+> Tester works in both Windows & Linux (Linux will require cloning this repo though).
+
 Theres a exe in the releases panel of this repo
 
 ```
