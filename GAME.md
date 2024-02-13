@@ -90,13 +90,13 @@ After the games are complete tester will output some info about how long it took
 
 ### Input Data
 
-1. When your program first runs via the [Tester](#testing) it will send a line with the sizes of the grid <width> <height> <rounds>
+1. When your program first runs via the [Tester](#testing) it will send a line with the sizes of the grid `<width> <height> <rounds>`
 2. Then it will send the entire grid
 3. Then it will send the first dice results
 
 After that you send the response back in the following format
 
-p <number> <x>,<y>
+`<number> <x> <y>`
 
 Heres a example loop:
 
