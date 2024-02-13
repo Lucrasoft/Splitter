@@ -49,6 +49,37 @@ A example implementation can also be found in the Source/Example directory of th
 
 The top left corner has the coordinate (0,0). The X coordinate increases to the right, the Y to the bottom.
 
+### Testing
+
+Tester is a program that "tests" and runs your bot (The command argument) every game and kills it after the game is done.  
+
+> [!TIP]
+> Tester works in both Windows & Linux (Linux will require cloning this repo and running with dotnet though).
+
+Theres a exe in the releases panel of this repo
+
+```
+$ ./Tester.exe
+
+Description:
+  Try your splitter bot with the tester program
+
+Usage:
+  Tester [options]
+
+Options:
+  --games <games>      Amount of games to play before spitting out the results [default: 500]
+  --silent             Makes it so all output is hidden to speed up the program [default: False]
+  --layout <layout>    Layout to use there's 2, 1 is without the hearts 2 is with the hearts [default: 1]
+  --command <command>  Command to execute []
+  --version            Show version information
+  -?, -h, --help       Show help and usage information
+```
+
+Heres a example on how to run the typescript example `./Tester.exe --games 200 --layout 2 --command "bun typescript/index.ts"` or the c# example `dotnet run --project Tester --games 200 --layout 2 --command "dotnet run --project Example"`
+
+After the games are complete tester will output some info about how long it took to complete the total score and score per game
+
 ### Input Data
 
 1. When your program first runs via the [Tester](#testing) it will send a line with the sizes of the grid <width> <height> <rounds>
@@ -120,35 +151,9 @@ Heres a example loop:
 
 The only thing you have to send is the p's the rest is what you receive.
 
-
-### Testing
-
-Tester is a program that "tests" and runs your bot (The command argument) every game and kills it after the game is done.  
-
 > [!TIP]
-> Tester works in both Windows & Linux (Linux will require cloning this repo though).
+> Reading the code of the Example bot in the Source/Example directory or the code of the typescript bot in the Source/typescript directory will help with creating your own implementation
 
-Theres a exe in the releases panel of this repo
-
-```
-$ ./Tester.exe
-
-Description:
-  Try your splitter bot with the tester program
-
-Usage:
-  Tester [options]
-
-Options:
-  --games <games>      Amount of games to play before spitting out the results [default: 500]
-  --silent             Makes it so all output is hidden to speed up the program [default: False]
-  --layout <layout>    Layout to use there's 2, 1 is without the hearts 2 is with the hearts [default: 1]
-  --command <command>  Command to execute []
-  --version            Show version information
-  -?, -h, --help       Show help and usage information
-```
-
-Heres a example on how to run the typescript example `./Tester.exe --games 200 --layout 2 --command "bun typescript/index.ts"` or the c# example `dotnet run --project Tester --games 200 --layout 2 --command "dotnet run --project Example"`
 
 ### Complex
 
