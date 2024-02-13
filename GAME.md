@@ -33,11 +33,19 @@ On the first move, we provide you with a digital version of the sheet, the meani
 
 ## Example
 
-![alt text](grid.png)
+This is the grid we will be playing on 
 
-In this example you will get 3 points
-2 2's are connected giving 2 point
-1 1 is connected also giving 1 point
+![Grid](gridPicture.png)
+
+> [!TIP]
+> This is grid 1 and can be used with --layout 1 with [Tester](#testing)
+
+![Outcome](endState.png)
+
+In this example you will get 7 points
+3 3's are connected giving 3 points
+2 2's are connected giving 2 points
+There are 2 single ones giving 2 points
 
 There are too many connected 4's on the board to give a point for that and theres to little connected 6's on the board for those to give a point
 

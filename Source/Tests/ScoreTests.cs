@@ -134,4 +134,22 @@ public class ScoreTests
 
         Assert.Equal(15, CalculatePoints(GridF, state));
     }
+
+
+    [Fact]
+    public void TestGridA()
+    {
+        int[,] state =
+        {
+            { 0,0,2,4,5,1,0,0 },
+            { 0,1,3,3,3,1,1,0 },
+            { 5,6,1,1,1,1,5,5 },
+            { 3,1,1,6,6,3,5,4 },
+            { 1,1,1,1,6,5,5,5 },
+            { 0,1,1,1,2,2,5,0 },
+            { 0,0,1,6,6,1,0,0 },
+        };
+
+        Assert.Equal(7, CalculatePoints(Grids.GridA, state));
+    }
 }
