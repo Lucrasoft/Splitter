@@ -10,7 +10,7 @@ The idea and rules of the game can be found [here](GAME.md)
 
 The goal is to make the best bot for completing the Splitter game using the stdin/stdout of a program
 
-The bot with the highest points after 1000 rounds wins!
+The bot with the highest points after 200 rounds wins!
  
 <!-- ## Offline
 This is an *offline* code competition meaning that your code doesn't have  -->

@@ -76,7 +76,7 @@ Usage:
   Tester [options]
 
 Options:
-  --games <games>      Amount of games to play before spitting out the results [default: 500]
+  --games <games>      Amount of games to play before spitting out the results [default: 200]
   --silent             Makes it so all output is hidden to speed up the program [default: False]
   --layout <layout>    Layout to use there's 2, 1 is without the hearts 2 is with the hearts [default: 1]
   --command <command>  Command to execute []
@@ -84,7 +84,7 @@ Options:
   -?, -h, --help       Show help and usage information
 ```
 
-Heres a example on how to run the typescript example `./Tester.exe --games 200 --layout 2 --command "bun typescript/index.ts"` or the c# example `dotnet run --project Tester --games 200 --layout 2 --command "dotnet run --project Example"`
+Heres a example on how to run the typescript example `./Tester.exe --games 200 --layout 2 --command "bun typescript/index.ts"` or the c# example `dotnet run --project Tester --games 200 --layout 2 --command "dotnet run --project Example"`. Keep in mind that running your program using dotnet run instead of dotnet [path to dll] will add so much overhead that its not possible to stay within the 10 minute time this should only be done for development.
 
 After the games are complete tester will output some info about how long it took to complete the total score and score per game
 
@@ -97,10 +97,12 @@ After the games are complete tester will output some info about how long it took
 After that you send the response back in the following format
 
 `<number> <x> <y>`
+Number being one of the numbers of the rolled dice
+
 
 Heres a example loop:
 
-(everything prefixed with # is send to your program)
+The lines prefixed with a # is what is send to your bot its not prefixed with a # when the tester runs your bot.
 
 ```
 # 8 7 22

@@ -39,10 +39,10 @@ function onLineRead(line: string) {
         const rollData = line.split(" ").map(Number);
         const first = rollData[0];
         const second = rollData[1];
-        let x: number=0, y: number=0, limit = 5000;
+        let x: number=0, y: number=0;
   
         while(true){
-            if(!((grid[y][x] !== 0 || grid[y][x] === -1) && limit !== 0)) break;
+            if(!((grid[y][x] !== 0 || grid[y][x] === -1))) break;
             x = rollDice(0, width / 2-1);
             y = rollDice(0, height );
         }

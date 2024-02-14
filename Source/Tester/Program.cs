@@ -13,7 +13,7 @@ class Program
     /// <param name="layout">Layout to use there's 2, 1 is without the hearts 2 is with the hearts</param>
     /// <param name="command">Command to execute</param>
     /// <returns></returns>
-    static async Task<int> Main(int games = 500, bool silent = false, string? seed = null, int layout = 1, string[] command = null)
+    static async Task<int> Main(int games = 200, bool silent = false, string? seed = null, int layout = 1, string[] command = null)
     {
 
         var points = 0;
