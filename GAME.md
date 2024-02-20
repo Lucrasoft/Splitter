@@ -91,18 +91,19 @@ After the games are complete tester will output some info about how long it took
 ### Input Data
 
 1. When your program first runs via the [Tester](#testing) it will send a line with the sizes of the grid `<width> <height> <rounds>`
-2. Then it will send the entire grid
-3. Then it will send the first dice results
+2. Then it will send the entire grid, This will send `<height>` amount of lines with a width of `<width>`. The grid will be in the [Digital Sheet](#digital-sheet) format
+3. Then it will send the first dice results as `<number1> <number2>`
 
 After that you send the response back in the following format
 
 `<number> <x> <y>`
-Number being one of the numbers of the rolled dice
+Number being one of the numbers of the rolled dice, The other one will automatically be mirrored on the other side in the Testers side you have to mirror it yourself on your own side
 
+You will get `<rounds>` amount of dices and after that your program is ended (Your program is killed / you can choose to exit yourself)
 
 Heres a example loop:
 
-The lines prefixed with a # is what is send to your bot its not prefixed with a # when the tester runs your bot.
+The lines prefixed with a # is what is send to your bot, its not prefixed with a # when the tester runs your bot.
 
 ```
 # 8 7 22
