@@ -12,6 +12,7 @@ for (int i = 0; i < height; i++)
 {
     var line = Console.ReadLine();
     Console.WriteLine("# " + line);
+    // Fill the grid with zeros indicating that that slot can be used to roll on and the rest will be filled with -1 (non placeble)
     var data = line!.Split(" ").Select(c => Int32.Parse(c)).Select(c => c != 0 ? 0 : -1).ToArray();
     arr.Add(data);
 }
