@@ -101,6 +101,11 @@ Number being one of the numbers of the rolled dice, The other one will automatic
 
 You will get `<rounds>` amount of dices and after that your program is ended (Your program is killed / you can choose to exit yourself)
 
+> [!TIP]
+> - If you send a line that doesn't start with a number it'll be ignored & A error will be logged
+> - If you send a line that starts with a `#` it'll be ignored & no error will be logged
+> - By default everything is logged to the console unless you enable the `--silent` flag
+
 Heres a example loop:
 
 The lines prefixed with a # is what is send to your bot, its not prefixed with a # when the tester runs your bot.
@@ -160,10 +165,10 @@ The lines prefixed with a # is what is send to your bot, its not prefixed with a
 5 3 5
 ```
 
-The only thing you have to send is the p's the rest is what you receive.
+The only thing you have to send is the things not prefixed with a `#` the rest is what tester sends to you
 
 > [!TIP]
-> Reading the code of the Example bot in the Source/Example directory or the code of the typescript bot in the Source/typescript directory will help with creating your own implementation
+> Reading the code of the Example bot in the [Source/Example](./Source/Example/) directory or the code of the typescript bot in the [Source/typescript](./Source/typescript/) directory will help with creating your own implementation
 
 
 ### Complex
