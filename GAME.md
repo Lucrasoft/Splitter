@@ -168,7 +168,7 @@ The lines prefixed with a # is what is send to your bot, its not prefixed with a
 The only thing you have to send is the things not prefixed with a `#` the rest is what tester sends to you
 
 > [!TIP]
-> Reading the code of the Example bot in the [Source/Example](./Source/Example/) directory or the code of the typescript bot in the [Source/typescript](./Source/typescript/) directory will help with creating your own implementation
+> Reading the code of the Example bot in the [Source/Example](./Source/Example/Program.cs) folder or the code of the typescript bot in the [Source/typescript](./Source/typescript/index.ts) directory will help with creating your own implementation
 
 
 ### Complex
