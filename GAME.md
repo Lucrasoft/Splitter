@@ -47,7 +47,7 @@ In this example you will get 7 points
 1. 2 2's are connected giving 2 points  
 1. There are 2 single ones giving 2 points  
 
-There are too many connected 4's on the board to give a point for that and theres to little connected 6's on the board for those to give a point
+There are too many connected 1's and 5's on the board to give a point for that and theres to little connected 6's on the board for those to give a point
 
 You can also [watch this youtube video](https://www.youtube.com/watch?v=o74s0IYA3B0) for a simple guide on how its played
 
