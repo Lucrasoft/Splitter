@@ -8,7 +8,7 @@ var width = Int32.Parse(sizes[0]);
 var height = Int32.Parse(sizes[1]);
 var rounds = Int32.Parse(sizes[2]);
 
-var gameState = new List<int[]>();
+var layout = new List<int[]>();
 // loop over the entire grid to get its sizes
 for (int i = 0; i < height; i++)
 {
@@ -16,9 +16,11 @@ for (int i = 0; i < height; i++)
     // log it to the console for debugging-purposes
     Console.WriteLine("# " + line);
     // Fill the grid with zeros indicating that that slot can be used to roll on and the rest will be filled with -1 (non placeble)
-    var data = line!.Split(" ").Select(c => Int32.Parse(c)).Select(c => c != 0 ? 0 : -1).ToArray();
-    gameState.Add(data);
+    var data = line!.Split(" ").Select(c => Int32.Parse(c)).ToArray();
+    layout.Add(data);
 }
+
+var gameState = layout.Select(row => row.Select(c => c != 0 ? 0 : -1).ToArray()).ToArray();
 
 var rnd = new Random();
 

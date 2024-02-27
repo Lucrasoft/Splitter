@@ -47,11 +47,12 @@ class Program
 
         return 0;
     }
+
     /// <summary>
     ///     A common hash implementation
     ///     Useful to be able to get a determined output
     /// </summary>
-    /// <param name="input">Strng to "hash"</param>
+    /// <param name="input">String to "hash"</param>
     /// <returns></returns>
     public static int CustomHash(string input)
     {
@@ -97,8 +98,6 @@ class Program
                 return;
             }
 
-
-
             var items = data.Replace(",", " ").Split(" ");
             int choice = int.TryParse(items[0], out choice) ? choice : -1;
             if (choice == -1)
@@ -114,7 +113,7 @@ class Program
                 if (game.Rounds == 0)
                 {
                     var points = game.GetPoints();
-                    Logger.Log(Print2dMatrix(game.State));
+                    Logger.Log(string.Join("\r\n", Print2dMatrix(game.State).Split("\n")));
                     try
                     {
                         process.Kill();
@@ -168,6 +167,4 @@ class Program
         }
         return res.ToString();
     }
-
-
 }
