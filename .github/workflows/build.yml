@@ -35,7 +35,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           tag_name: nightly
-          name: 'Splitter Teser $$'
+          name: 'Splitter Tester $$'
           prerelease: true
           body: 'Download the exe down below'
           files: |
