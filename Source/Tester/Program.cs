@@ -15,6 +15,11 @@ class Program
     /// <returns></returns>
     static async Task<int> Main(int games = 200, bool silent = false, string? seed = null, int layout = 1, string[] command = null)
     {
+        if (command == null || command[0] == "")
+        {
+            Console.WriteLine("Run tester with --help to get info about how to run it");
+            Environment.Exit(2);
+        }
 
         var points = 0;
         var i = 0;
@@ -133,7 +138,8 @@ class Program
             }
             catch (Exception e)
             {
-                Logger.Log(e.Message);
+                Console.WriteLine(e.Message);
+                Environment.Exit(1);
             }
         };
 
