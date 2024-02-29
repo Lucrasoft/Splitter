@@ -33,12 +33,14 @@ On the first move, we provide you with a digital version of the sheet, the meani
 
 ## Example
 
-This is one of the two grids (laytous) we will be playing on: 
+This is one of the two grids we will be playing on: 
 
 <img src="boardLayout1.png" alt="Grid" height="300">
 
 > [!TIP]
 > This is grid 1 and can be used with --layout 1 with [Tester](#testing)
+
+Here is an example of a filled board:
 
 <img src="endState.png" alt="Outcome" height="300">
 
@@ -111,7 +113,7 @@ Heres a example loop:
 The lines prefixed with a # is what is send to your bot, its not prefixed with a # when the tester runs your bot.
 
 ```
-# 8 7 22
+# 8 7 22    // width height and number of rounds. will not change during this competition.
 # 0 0 1 1 1 1 0 0
 # 0 1 1 1 1 1 1 0
 # 1 1 1 1 1 1 1 1
@@ -119,50 +121,12 @@ The lines prefixed with a # is what is send to your bot, its not prefixed with a
 # 1 1 1 1 1 1 1 1
 # 0 1 1 1 1 1 1 0
 # 0 0 1 1 1 1 0 0
-# 4 1
-4 2 1
-# 1 2
-1 3 2
-# 5 3
-5 3 1
-# 6 2
-6 1 5
-# 2 5
-2 0 2
-# 4 3
-4 2 4
-# 4 1
-4 3 6
-# 5 4
-5 2 6
-# 4 2
-4 2 3
-# 1 5
-1 0 3
-# 5 1
-5 0 4
-# 4 5
-4 1 1
-# 4 1
-4 3 4
-# 4 3
-4 2 0
-# 1 6
-1 2 5
-# 5 3
-5 3 3
-# 1 3
-1 3 0
-# 1 3
-1 1 3
-# 6 2
-6 2 2
-# 2 2
-2 1 4
-# 2 1
-2 1 2
-# 5 4
-5 3 5
+# 4 1       // you get a dice roll of 4 and 1.
+4 2 1       // place the dice with value 4 on position 2,1 ; the dice with value 1 will be mirrored automaticly.
+# 1 2       // etc. etc.
+1 3 2       
+etc.
+etc.
 ```
 
 The only thing you have to send is the things not prefixed with a `#` the rest is what tester sends to you
