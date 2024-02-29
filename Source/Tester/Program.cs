@@ -147,8 +147,8 @@ class Program
 
         process.BeginOutputReadLine();
         process.StandardInput.WriteLine($"{grid.Width()} {grid.Height()} {game.Rounds}");
-
-        foreach (var line in Print2dMatrix(grid._grid).TrimEnd().Split("\n"))
+        // on windows itll add a \r this will make parsing more diffucult since you cant really see it so we remove them.
+        foreach (var line in Print2dMatrix(grid._grid).TrimEnd().Replace("\r", "").Split("\n"))
         {
             process.StandardInput.WriteLine(line);
         }
