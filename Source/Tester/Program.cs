@@ -118,7 +118,7 @@ class Program
                 if (game.Rounds == 0)
                 {
                     var points = game.GetPoints();
-                    Logger.Log(string.Join("\r\n", Print2dMatrix(game.State).Split("\n")));
+                    Logger.Log(Print2dMatrix(game.State));
                     try
                     {
                         process.Kill();
@@ -169,7 +169,7 @@ class Program
         for (int i = 0; i < m.GetLength(0); i++)
         {
             string rowString = string.Join(" ", Enumerable.Range(0, m.GetLength(1)).Select(j => m[i, j]));
-            res.Append(rowString + "\n");
+            res.AppendLine(rowString);
         }
         return res.ToString();
     }
