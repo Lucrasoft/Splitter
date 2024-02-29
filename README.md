@@ -9,12 +9,12 @@ The idea and rules of the game can be found [here](GAME.md)
 ## Goal :goal_net: 
 
 The goal is to make the best bot for completing the Splitter game using the stdin/stdout of a program
-
 The bot with the highest points after 200 rounds wins!
+To compare the bots fairly, we will use the same 200 random seeds for each bot.   
 
 ## Expectation
 
-Its pretty simple to make a bot that just randomly places the numbers on valid places but it gets much harder once you actually try to make it connect the numbers for more points!
+Its pretty simple to make a bot that just randomly places the numbers on valid places but it gets much harder once you actually try to connect the numbers for more points!
 
 ## Competition
 
@@ -24,22 +24,20 @@ Besides the Best Score competition, you can also go for
 - The Nerdiest Solution :nerd_face:
      - Do something nerdy or awesome with the idea of this competition. For example: Use a obscure development language. Or go nuts with Lego, Rasperry Pi's, .. 
 
-## Team Up or... Open Competition!
+## Team Up... Semi-Open Competition!
 Ofcourse it's okay to team up. 
 Share your idea's and approaches in your team!
 
-Or, as a try-out: we introduce an Open Code Competition as well. 
-The members of the Open Competition will compete in rounds, and everybody's code is made public after each round :-) 
-Read [more about the open competition](OPENCOMP.md)
+This time we also introduce an Semi-Open Competition. The members of the Semi-Open Competition will compete in two rounds. After the first round, everyone's code is shared. 
+Read [more about the semi-open competition](OPENCOMP.md). 
 
 
 ## Submission
-
 On the end of the competition you can :
 
 Deliver us your solution as executable or script(python,js,ruby etc) and the arguments required for executable to run and we will test it and note down the score.
-There is a time limit of 10 minutes per run so if it takes longer than that to complete 200 games you will be disqualified.
+There is a time limit of 15 minutes so if it takes longer than that to complete 200 games you will be disqualified.
 
 ## Credits
 
-This Code Competion is based on the Splitter board game
+This Code Competion is based on the Splitter board game.
