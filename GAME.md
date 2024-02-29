@@ -33,9 +33,9 @@ On the first move, we provide you with a digital version of the sheet, the meani
 
 ## Example
 
-This is the grid we will be playing on 
+This is one of the two grids (laytous) we will be playing on: 
 
-<img src="gridPicture.png" alt="Grid" height="300">
+<img src="boardLayout1.png" alt="Grid" height="300">
 
 > [!TIP]
 > This is grid 1 and can be used with --layout 1 with [Tester](#testing)
