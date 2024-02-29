@@ -11,12 +11,6 @@ The idea and rules of the game can be found [here](GAME.md)
 The goal is to make the best bot for completing the Splitter game using the stdin/stdout of a program
 
 The bot with the highest points after 200 rounds wins!
- 
-<!-- ## Offline
-This is an *offline* code competition meaning that your code doesn't have  -->
-
-<!-- ## Expectation
-Although the first levels are doable, even by hand, the levels get trickier and harder to solve. Don't feel upset if you have a hard time reaching anything beyond level 50 or 100 or...It just get's really hard very fast.  -->
 
 ## Expectation
 
@@ -30,9 +24,14 @@ Besides the Best Score competition, you can also go for
 - The Nerdiest Solution :nerd_face:
      - Do something nerdy or awesome with the idea of this competition. For example: Use a obscure development language. Or go nuts with Lego, Rasperry Pi's, .. 
 
-## Team Up!
+## Team Up or... Open Competition!
+Ofcourse it's okay to team up. 
+Share your idea's and approaches in your team!
 
-Ofcourse it's okay to team up. Share your idea's and approaches in your team, but we discourage to share actual code.
+Or, as a try-out: we introduce an Open Code Competition as well. 
+The members of the Open Competition will compete in rounds, and everybody's code is made public after each round :-) 
+Read [more about the open competition](OPENCOMP.md)
+
 
 ## Submission
 
