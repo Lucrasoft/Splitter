@@ -33,7 +33,7 @@ class Program
             watch.Stop();
             Console.WriteLine($"Games played {i}");
             Console.WriteLine($"Points gotten {points}");
-            Console.WriteLine($"Points per game (avg) {points / i}");
+            Console.WriteLine($"Points per game (avg) {1.0 * points / i}");
             Console.WriteLine($"Time taken {watch.ElapsedMilliseconds / 1000}S");
         };
 

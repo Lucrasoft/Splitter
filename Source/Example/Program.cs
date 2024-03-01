@@ -1,59 +1,92 @@
-﻿// See https://aka.ms/new-console-template for more information
-// We read the first line containing the sizes & rounds
-var line1 = Console.ReadLine();
-// log it to the console for debugging-purposes
-Console.WriteLine("# " + line1);
-var sizes = line1.Split(" ");
-var width = Int32.Parse(sizes[0]);
-var height = Int32.Parse(sizes[1]);
-var rounds = Int32.Parse(sizes[2]);
+﻿// In this competition these values are fixed.. 
+int width = 8;
+int height = 7;
+int rounds = 22;
 
-var layout = new List<int[]>();
-// loop over the entire grid to get its sizes
-for (int i = 0; i < height; i++)
+// As a bot, you read the first line which contains the sizes & rounds, again for completeness.
+var firstLine = Console.ReadLine()?.Split(" ");
+if (firstLine != null)
 {
-    var line = Console.ReadLine();
-    // log it to the console for debugging-purposes
-    Console.WriteLine("# " + line);
-    var data = line!.Split(" ").Select(c => Int32.Parse(c)).ToArray();
-    layout.Add(data);
+    width = Int32.Parse(firstLine[0]);
+    height = Int32.Parse(firstLine[1]);
+    rounds = Int32.Parse(firstLine[2]);
 }
 
-// Fill the grid with zeros indicating that that slot can be used to roll on and the rest will be filled with -1 (non placeble)
-var gameState = layout.Select(row => row.Select(c => c != 0 ? 0 : -1).ToArray()).ToArray();
+// The second thing is to process the layout of the board we receive. 
+// There are two different layouts in the game. 
+var layout = new int[width, height];
+
+for (int y = 0; y < height; y++)
+{
+    var line = Console.ReadLine();
+    var data = line!.Split(" ").Select(c => Int32.Parse(c)).ToArray();
+    for (int x = 0; x < width; x++)
+    {
+        layout[x, y] = data[x];
+    }
+}
+
+
+// The state will hold the local information about which dices are placed on the board.
+var state = new int[width, height];
+
+// A helper function to check if a field on the board is free
+bool IsFree(int x, int y)
+{
+    //the layout indicates if a field is available to place a dice on
+    //the state indicates if a field is already occupied
+    return layout[x,y]>0 && state[x, y] == 0;
+}
+
+// A function to get all free positions on the board
+List<(int x,int y)> GetFreePositions()
+{
+    var result = new List<(int x, int y)>();
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            if (IsFree(x, y))
+            {
+                result.Add((x, y));
+            }
+        }
+    }
+    return result;
+}
+
 
 var rnd = new Random();
 
 for (int i = 0; i < rounds; i++)
 {
-    // We have to wait a bit Console.Readline() doesn't have a function that waits till a line is there it goes either theres a line or null
+    // We have to wait a bit Console.Readline()
+    // Depending on your platform and mode of execution it not always waits till a line is there it goes either theres a line or null
     Thread.Sleep(10);
-    var roll = Console.ReadLine();
-    if (roll == null) continue;
-    // log it to the console for debugging-purposes
-    Console.WriteLine("# " + roll);
-
-    var nums = roll.Split(" ");
-    var first = Int32.Parse(nums[0]);
-    // we dont actually use the second roll
-    var second = Int32.Parse(nums[1]);
-
-    var x = rnd.Next(0, width / 2);
-    var y = rnd.Next(0, height);
-    // set a hard limit
-    var limit = 5000;
-
-    // finds the next valid place to place the roll this is a brute-forcing way.
-    // if its not 0 its not a valid spot
-    while (gameState[y][x] != 0 && limit != 0)
+    var diceLine = Console.ReadLine();
+    if (diceLine != null)
     {
-        limit -= 1;
-        // we only want to place on the first half of the board
-        // the other half is ignored
-        x = rnd.Next(0, width / 2);
-        y = rnd.Next(0, height);
+        //We receive the dices from the game engine.
+        var dices = diceLine.Split(" ");
+
+        var dice1 = Int32.Parse(dices[0]);
+        var dice2 = Int32.Parse(dices[1]);
+
+        //We need to find a free position on the board to place the dices.
+        var freePositions = GetFreePositions();
+        //We pick a random free position.
+        var (x, y) = freePositions[rnd.Next(freePositions.Count)];
+
+        //We keep a record where we placed the dices.
+        state[x, y] = dice1;
+        //We need to place the second dice on the opposite side of the board.
+        state[width - x - 1, y] = dice2;
+
+        //We need to communicate our move to the game engine. 
+        //Only one dice is communicated, the second one is calculated by the game engine.
+        Console.WriteLine($"{dice1} {x} {y}");
     }
-    gameState[y][x] = first;
-    // send the result to tester
-    Console.WriteLine($"{first} {x} {y}");
+   
+
+
 }
