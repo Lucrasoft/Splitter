@@ -51,9 +51,12 @@ In this example you will get 7 points
 
 There are too many connected 1's and 5's on the board to give a point for that and theres to little connected 6's on the board for those to give a point
 
+> [!TIP]
+> For an example on how to plan your moves check [MOVES.md](MOVES.md)
+
 You can also [watch this youtube video](https://www.youtube.com/watch?v=o74s0IYA3B0) for a simple guide on how its played
 
-A example implementation can also be found in the Source/Example directory of this repo
+An example implementation can also be found in the Source/Example directory of this repo.
 
 ## Details
 
@@ -108,7 +111,7 @@ You will get `<rounds>` amount of dices and after that your program is ended (Yo
 > - If you send a line that starts with a `#` it'll be ignored & no error will be logged
 > - By default everything is logged to the console unless you enable the `--silent` flag
 
-Heres a example loop:
+Heres an example loop:
 
 The lines prefixed with a # is what is send to your bot, its not prefixed with a # when the tester runs your bot.
 
@@ -132,7 +135,7 @@ etc.
 The only thing you have to send is the things not prefixed with a `#` the rest is what tester sends to you
 
 > [!TIP]
-> Reading the code of the Example bot in the [Source/Example](./Source/Example/Program.cs) folder or the code of the typescript bot in the [Source/typescript](./Source/typescript/index.ts) directory will help with creating your own implementation
+> Reading the code of the Example bot in the [Source/Example](./Source/Example/Program.cs) folder or the code of the typescript bot in the [Source/typescript](./Source/typescript/index.ts) directory will help with creating your own implementation. You can also look at [MOVES.md](MOVES.md) for some explanations on how to plan your moves.
 
 
 ### Complex
