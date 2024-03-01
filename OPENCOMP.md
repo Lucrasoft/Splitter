@@ -9,9 +9,9 @@ We believe that this might provide:
 
 If you want to join in this semi-open competition ( highly recommended!)
 - Send us an email for to become member of this competition
-- First round : provide us your code , at the first-round date (as written in the communication)  
-- We calculate all the score, and share everyone's code to the semi-open competition members
-- Second round : you can change your code! and deliver your final solutions at the second-round date 
+- At the submission date of first round: provide us your code (as written in the email communication)  
+- We calculate all the score, and will share everyone's code to the semi-open competition members
+- Second round : you can change/upgrade your code! and deliver your final solutions at the second-round date 
 
 Your final score will consist of the sum of the first and second(final) round. 
 
