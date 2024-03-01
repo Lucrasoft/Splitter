@@ -35,7 +35,7 @@ Read [more about the semi-open competition](OPENCOMP.md).
 ## Submission
 On the end of the competition you can :
 
-Deliver us your solution, with build instructions and the arguments required for executable to run and we will test it and note down the score.
+Deliver us your solution, with build instructions and the arguments required for executable to run and we will test it and note down the score (the average score after 200 games).
 There is a time limit of 15 minutes so if it takes longer than that to complete 200 games you will be disqualified.
 You can expect 100 games of each of the two board layouts. 
 
