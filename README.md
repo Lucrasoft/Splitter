@@ -4,7 +4,7 @@ Welcome to the *Splitter* Code Competion repo.
 
 ## Game
 
-The idea and rules of the game can be found [here](GAME.md)
+The idea and rules of the game can be found [here](docs/GAME.md)
 
 ## Goal :goal_net: 
 
@@ -29,7 +29,7 @@ Ofcourse it's okay to team up.
 Share your idea's and approaches in your team!
 
 This time we also introduce an Semi-Open Competition. The members of the Semi-Open Competition will compete in two rounds. After the first round, everyone's code is shared. 
-Read [more about the semi-open competition](OPENCOMP.md). 
+Read [more about the semi-open competition](docs/OPENCOMP.md). 
 
 
 ## Submission
